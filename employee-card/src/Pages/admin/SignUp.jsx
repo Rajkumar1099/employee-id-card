@@ -1,83 +1,132 @@
-import React , {useState} from 'react'
-import { Form , Row, InputGroup, Col, Button} from 'react-bootstrap'
+import { Form , Row, InputGroup, Col, Button, Container} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { auth } from '../../firebase'
+import React, { useState } from "react";
+import { getAuth, signInWithPhoneNumber, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
-    const navigate=useNavigate()
-    const [authDetail, setAuthDetail]= useState({
-        email:'',
-        password:'',
-    })
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [choseMethod, setChoseMethod] = useState(false)
+  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationId, setVerificationId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = getAuth();
 
-    const handleChange=(e)=>{
-        const {name, value}=e.target;
-        setAuthDetail({
-            ...authDetail,
-            [name]:value
-        })
+  const handleSendVerificationCode = async () => {
+    try {
+      const captchaVerifier = new auth.RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+        }
+      );
+      const confirmationResult = await signInWithPhoneNumber(
+        auth,
+        phoneNumber,
+        captchaVerifier
+      );
+      setVerificationId(confirmationResult.verificationId);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const handleSignUp=(e)=>{
-        e.preventDefault()
-        createUser(authDetail.email, authDetail.password).then(() => {
-            navigate('/');
-          });
-        }
-    const createUser = async(email,password) => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log('user', user)
-        } catch (error) {
-            console.log(error)
-        }
-      };
+  const handleVerifyCode = async () => {
+    try {
+      const credential = auth.PhoneAuthProvider.credential(
+        verificationId,
+        verificationCode
+      );
+      await auth.signInWithCredential(credential);
+      // User is now logged in with phone number.
+      console.log("Phone login successful");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSignupWithEmail = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      // User is now registered with email and password.
+      console.log("Email registration successful");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+//   const RegisterMethod= choseMethod ? 
+//   <Container>
+//           <input
+//         type="text"
+//         placeholder="Phone Number"
+//         value={phoneNumber}
+//         onChange={(e) => setPhoneNumber(e.target.value)}
+//       />
+//       <button onClick={handleSendVerificationCode}>
+//         Send Verification Code
+//       </button>
+
+//       <div>
+//         <input
+//           type="text"
+//           placeholder="Verification Code"
+//           value={verificationCode}
+//           onChange={(e) => setVerificationCode(e.target.value)}
+//         />
+//         <button onClick={handleVerifyCode}>Verify Code</button>
+//       </div>
+
+//   </Container> 
+//   :
+//   <Container>
+//   <input
+//         type="text"
+//         placeholder="Email"
+//         value={email}
+//         onChange={(e) => setEmail(e.target.value)}
+//       />
+//       <input
+//         type="password"
+//         placeholder="Password"
+//         value={password}
+//         onChange={(e) => setPassword(e.target.value)}
+//       />
+//       <button onClick={handleSignupWithEmail}>Sign up with Email</button>
+
+//       {/* Include a div with id "recaptcha-container" for reCAPTCHA */}
+//       <div id="recaptcha-container"></div>
+//   </Container>
+
   return (
-    <div className='container'> 
-        <Row>
-            <Col xs={12}  md={6} lg={3}>
-                <div className='h4'>Register</div>
-            </Col>
-        </Row>
-        <Row>
-            <Col  xs={12}  md={4} lg={4}>
-            <Form>
-                <InputGroup hasValidation>
-                    <InputGroup.Text>User name</InputGroup.Text>
-                    <Form.Control type="text" name='username' onChange={handleChange}/>
-                    <Form.Control.Feedback type="invalid">
-                    Please choose a username.
-                    </Form.Control.Feedback>
-                </InputGroup>
-                <InputGroup hasValidation>
-                    <InputGroup.Text>User Email</InputGroup.Text>
-                    <Form.Control type="email" name='email' onChange={handleChange}/>
-                    <Form.Control.Feedback type="invalid">
-                    Please choose a email.
-                    </Form.Control.Feedback>
-                </InputGroup>
-                <InputGroup hasValidation>
-                    <InputGroup.Text>User password</InputGroup.Text>
-                    <Form.Control type="password" name='password' onChange={handleChange}/>
-                    <Form.Control.Feedback type="invalid">
-                    Please choose a user password.
-                    </Form.Control.Feedback>
-                </InputGroup>
-                <Row>
-                    <Col xs={12} sm={6} md={6} lg={8} >
-                        <div className='btn btn-primary  mt-2' onClick={(e)=>handleSignUp(e)}>Register</div>
-                    </Col>
-                    <Col xs={12} sm={6} md={6} lg={4} >
-                        <div className='btn btn-primary  mt-2' onClick={()=>{navigate('/login')}}>Login</div>
-                    </Col>
-                </Row>
-            </Form>
-            </Col>
-        </Row>
+    <div>
+     <input
+        type="text"
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+      <button onClick={handleSendVerificationCode}>
+        Send Verification Code
+      </button>
+      <div>
+        <input
+          type="text"
+          placeholder="Verification Code"
+          value={verificationCode}
+          onChange={(e) => setVerificationCode(e.target.value)}
+        />
+        <button onClick={handleVerifyCode}>Verify Code</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default SignUp;

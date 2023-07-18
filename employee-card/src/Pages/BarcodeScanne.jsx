@@ -66,8 +66,8 @@ const BarcodeScanner = () => {
       <div id="barcode-scanner" />
       {productDetails ? (
         <div>
-          <p>Name: {productDetails.name}</p>
-          <p>Price: {productDetails.price}</p>
+          <p>Contact: {productDetails.contact}</p>
+          <p>Email: {productDetails.email}</p>
           {/* Display other product details as needed */}
         </div>
       ) : (
