@@ -1,17 +1,25 @@
-import React from 'react'
-import { Navbar, Image, Container, Nav } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Navbar, Image, Container, Nav ,Dropdown} from 'react-bootstrap'
 import  logo  from '../Common/Images/lookatmeprintLogo.png'
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import Notification from './Notification/Notification.jsx';
+import { Logout } from './admin/Logout';
+import { FiChevronLeft } from 'react-icons/fi'
+
 
 const TopNavbar = () => {
     const {id} =useParams();
     const location =useLocation();
-    console.log('id',id, location)
+    const [active, setActive] = useState(false);
+    const handleShowActive=(e)=>{
+        e.preventDefault();
+        setActive(t=>!t)
+    }
+    const userId= sessionStorage.getItem('userId')
+    console.log('userId', active , userId, id)
     const Navigation = ({ id, location }) => {
         const RenderNavLink = location.pathname === '/' ? (
           <NavLink to='/' >
-            
           </NavLink>
         ) : (
           <Navbar expand="lg" sticky="top" bg='dark' data-bs-theme="dark">
@@ -21,38 +29,26 @@ const TopNavbar = () => {
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} className='col-6'>
-                  <NavLink to={`login/view/${id}`} className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2" : "text-decoration-none"}>
-                   
+                <Nav>
+                  <NavLink to={`login/view/${id}`} className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2 " : "text-decoration-none"}>
                   </NavLink>
                   <NavLink to='/vcard' className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2" : "text-decoration-none"}>
                    Views Card
                    </NavLink>
                 </Nav>
-              </Navbar.Collapse>
-              <Navbar.Toggle />
-              <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                <Nav style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} className='col-6'>
-                  <NavLink  className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2" : "text-decoration-none"}>
-                        Logout
-                  </NavLink>
-                </Nav>
-              </Navbar.Collapse>
+              </Navbar.Collapse  >
             </Container>
           </Navbar>
         );
-      
         return RenderNavLink;
       };
-
       const RenderNav=Navigation({id, location})
   return (
   <div>
-{
-    RenderNav
-}
+    {
+        RenderNav
+    }
   </div>
   )
 }
-
 export default TopNavbar;

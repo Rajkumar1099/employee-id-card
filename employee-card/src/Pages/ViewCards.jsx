@@ -21,13 +21,14 @@ const ViewCards = () => {
           };
           fetchPosts();
       },[])
+      console.log('data', data)
   return (
     <div>
         <Row xs="auto">
             {
             data ?.map((value, i) => {
-            return (<Cards key={i} userValue={value} />)
-            })
+              return (<Cards key={i} userValue={value} />)
+              })
             }
         </Row>
     </div>

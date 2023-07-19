@@ -62,7 +62,6 @@ function Details() {
       <Row>
         <Col>
             <Image variant="top" src={`${userValue?.img_url}`} style={{width:'100px', height:'100px'}} roundedCircle/>
-            
         </Col>
       </Row>
       <Card.Body>
