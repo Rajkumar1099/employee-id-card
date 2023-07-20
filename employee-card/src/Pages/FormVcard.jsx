@@ -6,7 +6,7 @@ import { database , auth} from '../firebase';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-const Home = () => {
+const FormVcard = () => {
     const[error, setError] = useState(false);
     const[userId, setUserId] = useState('');
     const navigate=useNavigate()
@@ -89,7 +89,7 @@ const Home = () => {
         const user = auth.currentUser;
         // A post entry.
         const postData = {
-            role:'customer',
+            role:'admin',
             created_at:new Date().toJSON()
         };
         // Get a key for a new Post.
@@ -224,4 +224,4 @@ const Home = () => {
         </Col>
     )
     }
-export default Home
+export default FormVcard;

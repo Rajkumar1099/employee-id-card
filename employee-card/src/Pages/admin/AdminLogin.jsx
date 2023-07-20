@@ -1,14 +1,16 @@
-import React , {useEffect, useState} from 'react'
-import { Container, Row, Col,Form, InputGroup, Button, Image } from 'react-bootstrap'
-import { signInWithEmailAndPassword, signInWithPhoneNumber , getAuth, onAuthStateChanged } from 'firebase/auth'
+import React , { useState} from 'react'
+import { Row, Col,Form, InputGroup, Image } from 'react-bootstrap'
+import { signInWithEmailAndPassword, signInWithPhoneNumber, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../firebase'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import Notification from '../Notification/Notification';
 import logo from '../../Common/Images/lookatmeprintLogo.png';
+import { getDatabase, ref, onValue} from 'firebase/database';
 
 const AdminLogin = () => {
     const [error, setError] = useState(false);
-    const [user, setUser]=useState(null);
+    const [role, setRole]=useState(null);
+    const [data, setData]=useState([])
     const navigate=useNavigate();
     const [authDetail, setAuthDetail] = useState({
         email:'',
@@ -22,19 +24,30 @@ const AdminLogin = () => {
             [name]:value
         })
     }
+
+    const getUserData = async(userId, token)=>{
+        const db = getDatabase();
+        const postsRef = await ref(db, 'users/'+userId);
+        onValue(postsRef, (snapshot) => {
+            const postData = snapshot.val();
+            const userData = {};
+            userData['userId'] = userId;
+            userData['userRole'] = postData.role; // admin or user
+            userData['token'] = token;        
+            sessionStorage.setItem("userData", JSON.stringify(userData) );
+            navigate(`/admin/vcard`);
+        });
+    }
     const signIn = async(email, password) => {
         try {
-        const userCredential = await signInWithEmailAndPassword( auth, email, password);
-        const user = userCredential.user;
-        const token = await user.getIdToken();
-        sessionStorage.setItem("userId", user.uid);
-        console.log('user', user)
-        navigate(`/vcard`)
-        console.log('User signed in:', user, token);
-      } catch (error) {
-        console.error('Error signing in:', error);
-      }
-      };
+            const userCredential = await signInWithEmailAndPassword( auth, email, password);
+            const user = userCredential.user;
+            const token = await user.getIdToken();
+                getUserData(user.uid, token);
+        } catch (error) {
+            console.error('Error signing in:', error);
+        }
+    };
     const handleLogin=(e)=>{
         e.preventDefault()
         signIn(authDetail.email, authDetail.password).then(() =>{
@@ -44,6 +57,8 @@ const AdminLogin = () => {
             })
           });
     }
+
+
   return (
     <div className='container '>
         <Row>

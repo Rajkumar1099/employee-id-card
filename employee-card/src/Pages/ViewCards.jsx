@@ -2,13 +2,25 @@ import React ,{useEffect, useState}from 'react'
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { Row} from 'react-bootstrap';
 import Cards from './Cards';
+import { useLocation } from 'react-router-dom';
 
 const ViewCards = () => {
-    const [data, setData]= useState([])
+    const [data, setData]= useState([]);
+    const location=useLocation();
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null;
+    const userId = userData !== null ? userData.userId : 0;
+
     useEffect(()=>{
         const db = getDatabase();
+        let postsRef=null;
         const fetchPosts = () => {
-            const postsRef = ref(db, 'posts');
+            if( userRole == 'admin' ) {
+                 postsRef = ref(db, 'posts');
+            } else if ( userRole == 'user' ) {
+                postsRef = ref(db, 'posts/'+userId);
+            }
             onValue(postsRef, (snapshot) => {
               const postData = snapshot.val();
               const postList = Object.entries(postData).map(([key, value]) => (
@@ -21,7 +33,6 @@ const ViewCards = () => {
           };
           fetchPosts();
       },[])
-      console.log('data', data)
   return (
     <div>
         <Row xs="auto">

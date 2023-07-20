@@ -1,19 +1,12 @@
 // ProtectedRoute.js
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-    const userRole= sessionStorage.getItem('userRole') || 'admin';
-
-    if(userRole==='admin')
-    {
+const ProtectedRoute = ({children}) => {
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null;
+    if ( userRole == 'admin' || userRole === 'user' ){
         return  <>{children}</>
     }
-    if(userRole ==='user')
-    {
-        return  <>{children}</>
-    }
-
 };
-
 export default ProtectedRoute;

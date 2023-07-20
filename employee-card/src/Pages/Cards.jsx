@@ -9,23 +9,11 @@ import { MdOutlineLocationOn } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
 
 const Cards = ({userValue}) => {
-    // const { inputRef } = useBarcode({
-    //     value: `${userValue?.email}`,
-    //     options: {
-    //       background: '#ccffff',
-    //       fontSize: 20,
-    //       margin: 30,
-    //       fontOptions: "bold",
-    //       width: 1,
-    //       height:70,
-    //     },
-    //     format: "ean13",
-    //     lastChar: ">"
-    //   });
+    
       console.log("userValue", userValue)
   return (
     <div>
-    <NavLink to={`/login/view/${userValue.id}`} style={{ textDecoration: 'none' }} >
+    <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} >
         <Card style={{width:"300px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
         <Row>
             <Col>

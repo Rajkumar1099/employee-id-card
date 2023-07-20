@@ -3,8 +3,10 @@ import AdminDashboard from './AdminDashboard';
 import AdminLogin from './AdminLogin';
 
 function Admin() {
-    const token = sessionStorage.getItem("authtoken");
-    if( token == undefined || token == null ) {
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null;
+    if( userRole === undefined || userRole === null ) {
         return (
             <AdminLogin />
         )
