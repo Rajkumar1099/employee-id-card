@@ -1,8 +1,6 @@
-import React from 'react';
-import AdminDashboard from './AdminDashboard';
-import AdminLogin from './AdminLogin';
+import React from 'react'
 
-function Admin() {
+const User = () => {
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);
     const userRole = userData !== null ? userData.userRole : null;
@@ -17,4 +15,4 @@ function Admin() {
     }
 }
 
-export default Admin;
+export default User

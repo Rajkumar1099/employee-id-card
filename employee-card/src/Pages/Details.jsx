@@ -7,13 +7,19 @@ import {BiLogoWhatsapp} from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
 import { MdOutlineLocationOn } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
+import { AiTwotoneEdit } from 'react-icons/ai'
+import UserUpdate from './Users/UserUpdate';
 
 function Details() {
     const {id} =useParams();
-    const [data, setData] = useState([]);
     const [userValue, setUserValue] = useState(null);
     console.log('data',id)
+    const navigate= useNavigate()
     const db = getDatabase();
+    const handleEdite=()=>{
+        UserUpdate(userValue)
+        navigate('')
+    }
     useEffect(() => {
         const fetchPosts = async () => {
           const postsRef = ref(db, 'posts/' + id);
@@ -22,20 +28,21 @@ function Details() {
             setUserValue(postData);
           };
           onValue(postsRef, onDataUpdate);
-    
           // Clean up the listener when the component unmounts
           return () => {
             off(postsRef, onDataUpdate);
           };
         };
-    
         fetchPosts();
       }, [db, id]);
-    
-console.log('value', userValue)
   return (
     <div>
    <Card style={{width:"300px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
+    <Row>
+        <Col xs={12} md={10} lg={10}>
+        </Col>
+        <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
+    </Row>
         <Row>
             <Col>
                 <Image variant="top" src={`${userValue?.img_url}`} style={{width:'100px', height:'100px'}} roundedCircle/>

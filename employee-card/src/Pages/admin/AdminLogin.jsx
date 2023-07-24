@@ -33,9 +33,16 @@ const AdminLogin = () => {
             const userData = {};
             userData['userId'] = userId;
             userData['userRole'] = postData.role; // admin or user
-            userData['token'] = token;        
+            userData['token'] = token;
             sessionStorage.setItem("userData", JSON.stringify(userData) );
+            if(postData.role === 'admin')
+           {
             navigate(`/admin/vcard`);
+           }
+           if(postData.role ==='customer')
+           {
+            navigate(`/user/details/${userId}`)
+           }
         });
     }
     const signIn = async(email, password) => {

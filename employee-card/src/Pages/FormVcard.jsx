@@ -89,7 +89,7 @@ const FormVcard = () => {
         const user = auth.currentUser;
         // A post entry.
         const postData = {
-            role:'admin',
+            role:'customer',
             created_at:new Date().toJSON()
         };
         // Get a key for a new Post.
@@ -106,7 +106,7 @@ const FormVcard = () => {
         {
             writeNewPost( userData.username, userData.address, userData.email, userData.contact, profileUrl, userData.whats_app, userData.company_name,userData.role,userData.password) 
             createNewUsers(userData.role)
-            navigate('/login')
+            navigate('/admin/vcard')
         }
     },[userId])
 
@@ -217,7 +217,7 @@ const FormVcard = () => {
                     <div className='btn btn-primary w-100 m-2' onClick={(e)=>handleCreateData(e)}>Save</div>
                 </Col>
                 <Col xs={12} sm={6} md={6} lg={6}>
-                    <div className='btn btn-primary w-100 m-2' onClick={()=>{setError((t)=>!t)}}>Cancel</div>
+                    <div className='btn btn-primary w-100 m-2' onClick={()=>{navigate('/admin/vcard')}}>Cancel</div>
                 </Col>
                 </Row>
             </Form>

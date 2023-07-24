@@ -1,11 +1,20 @@
 import React from 'react';
 import { Container, Navbar, Nav, Image, Dropdown } from 'react-bootstrap';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../Common/Images/lookatmeprintLogo.png';
 import ViewCards from '../ViewCards';
 
 const AdminDashboard = () => {
     const {id} = useParams();
+    const navigate=useNavigate()
+    let userData=sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null;
+
+    const handleLogout=()=>{
+        sessionStorage.setItem('userData', null);
+        navigate('/')
+    }
     return (
         <div>
             <Navbar expand="lg" sticky="top" bg='light'>
@@ -19,15 +28,20 @@ const AdminDashboard = () => {
                         {/* Vcard */}
                     </NavLink>
                 </Nav>
+                <Nav>
+                    <NavLink to='/user'>
+                        {/* Vcard */}
+                    </NavLink>
+                </Nav>
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                    <Nav style={{ flexDirection: "row", justifyContent: "space-between" }} >
+                    <Nav style={{ flexDirection: "row", justifyContent: "space-between", marginRight:'50px', padding:'2px' }} >
                         <NavLink >
                             <Dropdown className='dropdown-right'>
                                 <Dropdown.Toggle variant="none" id="dropdown-basic">
                                     {/* <Logout  /> */}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item >Logout</Dropdown.Item>
+                                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </NavLink>
