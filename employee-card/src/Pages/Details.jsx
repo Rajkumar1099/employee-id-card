@@ -1,30 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getDatabase, ref, onValue} from 'firebase/database';
+import { getDatabase, ref, onValue, off } from 'firebase/database';
 import { Card, Button, Image, Row,Col } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import {BsFillTelephoneFill} from 'react-icons/bs'
-import {BiLogoWhatsapp} from 'react-icons/bi'
-import { HiOutlineMail } from 'react-icons/hi'
-import { MdOutlineLocationOn } from 'react-icons/md'
-import { TbWorld } from 'react-icons/tb'
-import { AiTwotoneEdit } from 'react-icons/ai'
+import {BsFillTelephoneFill} from 'react-icons/bs';
+import {BiLogoWhatsapp} from 'react-icons/bi';
+import { HiOutlineMail } from 'react-icons/hi';
+import { MdOutlineLocationOn } from 'react-icons/md';
+import { TbWorld } from 'react-icons/tb';
+import { AiTwotoneEdit } from 'react-icons/ai';
 import UserUpdate from './Users/UserUpdate';
+import dummyuser from '../assets/dummyuser.jpg';
 
 function Details() {
     const {id} =useParams();
     const [userValue, setUserValue] = useState(null);
-    console.log('data',id)
     const navigate= useNavigate()
     const db = getDatabase();
     const handleEdite=()=>{
-        UserUpdate(userValue)
-        navigate('')
+        navigate(`/admin/edit/${id}`)
     }
     useEffect(() => {
         const fetchPosts = async () => {
           const postsRef = ref(db, 'posts/' + id);
           const onDataUpdate = (snapshot) => {
-            const postData = snapshot.val();
+            const postData = snapshot.val() !== null ? snapshot.val() : [];
             setUserValue(postData);
           };
           onValue(postsRef, onDataUpdate);
@@ -45,7 +44,7 @@ function Details() {
     </Row>
         <Row>
             <Col>
-                <Image variant="top" src={`${userValue?.img_url}`} style={{width:'100px', height:'100px'}} roundedCircle/>
+                <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'100px', height:'100px'}} roundedCircle/>
             </Col>
         </Row>
         <Row>

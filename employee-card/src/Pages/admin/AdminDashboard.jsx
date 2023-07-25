@@ -1,12 +1,14 @@
-import React from 'react';
-import { Container, Navbar, Nav, Image, Dropdown } from 'react-bootstrap';
+import React, { useState ,useRef} from 'react';
+import { Container, Navbar, Nav, Image, Dropdown, Overlay } from 'react-bootstrap';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../Common/Images/lookatmeprintLogo.png';
 import ViewCards from '../ViewCards';
-
+import profile from '../../assets/dummyuser.jpg'
 const AdminDashboard = () => {
     const {id} = useParams();
-    const navigate=useNavigate()
+    const navigate=useNavigate();
+    const [show, setShow]=useState(false);
+    const target = useRef(null);
     let userData=sessionStorage.getItem('userData');
     userData = JSON.parse(userData);
     const userRole = userData !== null ? userData.userRole : null;
@@ -35,16 +37,23 @@ const AdminDashboard = () => {
                 </Nav>
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav style={{ flexDirection: "row", justifyContent: "space-between", marginRight:'50px', padding:'2px' }} >
-                        <NavLink >
-                            <Dropdown className='dropdown-right'>
-                                <Dropdown.Toggle variant="none" id="dropdown-basic">
-                                    {/* <Logout  /> */}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </NavLink>
+                        {/* <NavLink > */}
+                            <Image src={profile} width={26} height={26} roundedCircle ref={target} onClick={() => setShow(!show)} />
+                            {show && 
+                            <div 
+                            style={{
+                                        position: 'absolute',
+                                        marginLeft: '20px', // Adjust this value as needed to position the logout div properly
+                                        // top: 0,
+                                        backgroundColor: '#808183',
+                                        padding: '5px',
+                                        borderRadius: '5px',
+                                        }}
+                                        onClick={handleLogout}
+                                        >
+                                            Logout
+                            </div>}
+                        {/* </NavLink> */}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>            

@@ -29,10 +29,9 @@ const UserUpdate = () => {
     const handleCreateData=(e)=>{
         e.preventDefault();
         console.log(userData);
-        createUser( userData.email,userData.password, userData.contact);
     }
-    const updateUsers=()=>{
-
+    const uploadFileAndPostUrl=(e)=>{
+        e.preventDefault()
     }
   return (
     <Col xs={12} sm={6} md={6} lg={6}>

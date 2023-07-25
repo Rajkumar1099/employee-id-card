@@ -27,7 +27,8 @@ const ViewCards = () => {
                 postsRef = ref(db, 'posts/'+userId);
             }
             onValue(postsRef, (snapshot) => {
-              const postData = snapshot.val();
+              let postData = snapshot.val();
+              postData = postData !== null ? postData : [];
               const postList = Object.entries(postData).map(([key, value]) => (
                 {
                 id: key,

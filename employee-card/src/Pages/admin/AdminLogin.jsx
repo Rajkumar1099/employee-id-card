@@ -93,22 +93,22 @@ const AdminLogin = () => {
                         Please choose a password.
                         </Form.Control.Feedback>
                     </InputGroup>
-                    <Row>
+                    {/* <Row>
                         <Col xs={12} sm={6} md={6} lg={6}>
                         </Col>
                         <Col xs={12} sm={6} md={6} lg={6}>
                             <NavLink className='text-primary' to='/forgot-password'>Forgot password
                             </NavLink>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <br/>
                     <Row>
                         <Col xs={12} sm={6} md={6} lg={6} >
                             <div className='btn btn-primary w-100 mt-2' onClick={(e)=>handleLogin(e)}>Login</div>
                         </Col>
-                        <Col xs={12} sm={6} md={6} lg={6}>
+                        {/* <Col xs={12} sm={6} md={6} lg={6}>
                             <div className='btn btn-secondary w-100 mt-2' onClick={()=>{navigate('/signup')}}>Create New acount</div>
-                        </Col>
+                        </Col> */}
                     </Row>
                 </Form>
             </Col>

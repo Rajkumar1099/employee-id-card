@@ -6,22 +6,22 @@ import {BsFillTelephoneFill} from 'react-icons/bs'
 import {BiLogoWhatsapp} from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
 import { MdOutlineLocationOn } from 'react-icons/md'
-import { TbWorld } from 'react-icons/tb'
+import { TbWorld } from 'react-icons/tb';
+import dummyuser from '../assets/dummyuser.jpg';
 
 const Cards = ({userValue}) => {
     
-      console.log("userValue", userValue)
   return (
     <div>
     <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} >
         <Card style={{width:"300px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
         <Row>
             <Col>
-                <Image variant="top" src={`${userValue?.img_url}`} style={{width:'100px', height:'100px'}} roundedCircle/>
+                <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'100px', height:'100px'}} roundedCircle/>
             </Col>
         </Row>
         <Row>
-            <Card.Text >{userValue?.role}-{userValue?.username}</Card.Text>
+            <Card.Text ><div className='h5'>{userValue?.username}</div><div className='h6'>{userValue?.role}</div></Card.Text>
         </Row>
         <Card.Body>
             <Row>
