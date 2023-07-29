@@ -8,8 +8,12 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { MdOutlineLocationOn } from 'react-icons/md';
 import { TbWorld } from 'react-icons/tb';
 import { AiTwotoneEdit } from 'react-icons/ai';
-import UserUpdate from './Users/UserUpdate';
+import { AiFillLinkedin } from 'react-icons/ai';
+import {BiLogoTwitter} from 'react-icons/bi';
+import { AiFillFacebook } from 'react-icons/ai'
+import { FaInstagramSquare } from 'react-icons/fa'
 import dummyuser from '../assets/dummyuser.jpg';
+import '../assets/css/style.css';
 
 function Details() {
     const {id} =useParams();
@@ -17,7 +21,7 @@ function Details() {
     const navigate= useNavigate()
     const db = getDatabase();
     const handleEdite=()=>{
-        navigate(`/admin/edit/${id}`)
+        navigate(`/user/edit/${id}`);
     }
     useEffect(() => {
         const fetchPosts = async () => {
@@ -35,40 +39,78 @@ function Details() {
         fetchPosts();
       }, [db, id]);
   return (
-    <div>
-   <Card style={{width:"300px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
-    <Row>
-        <Col xs={12} md={10} lg={10}>
-        </Col>
-        <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
-    </Row>
-        <Row>
-            <Col>
-                <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'100px', height:'100px'}} roundedCircle/>
-            </Col>
-        </Row>
-        <Row>
-            <Card.Text >{userValue?.role}-{userValue?.username}</Card.Text>
-        </Row>
-        <Card.Body>
-            <Row>
-            <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Contact Data</Card.Title>
-                <Col xs={12} style={{textAlign:'left'}}>
-                    <Card.Text ><BsFillTelephoneFill style={{color:'#5F8CBF'}}/> {userValue?.contact}</Card.Text>
-                    <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text>
-                    <Card.Text ><TbWorld style={{color:'grey'}}/> {userValue?.company_name}</Card.Text>
-                    <Card.Text ><HiOutlineMail style={{color:'red'}} /> {userValue?.email}</Card.Text>
-                </Col>
-            </Row>
-            <br />
-            <Row>
-                <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Address Data</Card.Title>
-                <Col xs={12} style={{textAlign:'left'}}>
-                <Card.Text ><MdOutlineLocationOn style={{color:'red'}} />{userValue?.address}</Card.Text>
-                </Col>
-            </Row>
-        </Card.Body>
-        </Card>
+    <div className="row">
+        <div id="msform" className="col-md-12 col-md-offset-3">
+            <fieldset>
+                <Row>
+                    <Col xs={12} md={12} lg={12}>
+                        <Image  src={userValue?.img_url ? userValue?.img_url : dummyuser } width={120} roundedCircle />
+                        <AiTwotoneEdit className='edit-btn' onClick={handleEdite} />
+                    </Col>
+                    <div className="h2 fs-title">{userValue?.firstname} {userValue?.lastname}</div>
+                    <div className="h6">{userValue?.role}</div>    
+                </Row>
+                <div className="h2 fs-title">{userValue?.firstname} {userValue?.lastname}</div>
+                <div className="h6">{userValue?.role}</div>
+                <hr />
+                <h3 className="h4 fs-subtitle">Personal Info</h3>
+                <hr />
+                <div>
+                    <Row>
+                        <Card.Text >{userValue?.role}-{userValue?.firstname}</Card.Text>
+                        <Col xs={12} style={{textAlign:'left'}}>
+                            {userValue?.company_name ?<Card.Text ><TbWorld style={{color:'#fbaa19'}}/> {userValue?.company_name}</Card.Text>:''}
+                            {userValue?.email ? <Card.Text ><HiOutlineMail style={{color:'#fbaa19'}} /> {userValue?.email}</Card.Text> :''}
+                            {userValue?.contact  ? <Card.Text ><BsFillTelephoneFill style={{color:'#fbaa19'}}/> {userValue?.contact}</Card.Text> :'' }
+                            {userValue?.whats_app  ? <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text> :''}
+                            
+                        </Col>
+                    </Row>
+                </div>
+            </fieldset>
+        </div>
+        <div id="msform" className="col-md-12 col-md-offset-3">
+           <fieldset>
+                <Row>
+                    <Col xs={12} md={10} lg={10}>
+                    </Col>
+                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
+                </Row>
+                <h3 className="h4 fs-subtitle">Social Networks</h3>
+                <hr />
+                
+                <div>
+                    <Row>
+                        <Col xs={12} style={{textAlign:'left'}}>
+                            {userValue?.linkedIn  ? <Card.Text ><AiFillLinkedin style={{color:'#fbaa19'}}/> {userValue?.linkedIn}</Card.Text> :'' }
+                            {userValue?.twitter  ? <Card.Text ><BiLogoTwitter style={{color:'green'}}/> {userValue?.twitter}</Card.Text> :''}
+                            {userValue?.insta ?<Card.Text ><FaInstagramSquare style={{color:'#fbaa19'}}/> {userValue?.insta}</Card.Text>:''} 
+                            {userValue?.facebook ? <Card.Text ><AiFillFacebook style={{color:'#fbaa19'}} /> {userValue?.facebook}</Card.Text> :''}
+                        </Col>
+                    </Row>
+                </div>
+            </fieldset>
+        </div> 
+        <div id="msform" className="col-md-12 col-md-offset-3">
+           <fieldset>
+                <Row>
+                    <Col xs={12} md={10} lg={10}>
+                    </Col>
+                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
+                </Row>
+                <h3 className="h4 fs-subtitle">Personal Details</h3>
+                <hr />
+                
+                <div>
+                    <Row>
+                        <Card.Text ></Card.Text>
+                        <Col xs={12} style={{textAlign:'left'}}>
+                        {userValue?.address ? <Card.Text ><MdOutlineLocationOn style={{color:'#fbaa19'}} />{userValue?.address}</Card.Text> :''} 
+                        </Col>
+                    </Row>
+                </div>
+            </fieldset>
+        </div> 
     </div>
   )
 }

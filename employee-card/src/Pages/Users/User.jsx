@@ -1,5 +1,6 @@
 import React from 'react'
-
+import AdminLogin from '../admin/AdminLogin';
+import AdminDashboard from '../admin/AdminDashboard';
 const User = () => {
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);

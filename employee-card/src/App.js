@@ -9,6 +9,7 @@ import FormVcard from './Pages/FormVcard';
 import Details from './Pages/Details';
 import UserProtectedRoute from './Pages/Users/UserProtectedRoute';
 import UserUpdate from './Pages/Users/UserUpdate';
+import CardDetails from './Pages/CardDetails';
 function App() {
     const location=useLocation()
     let userData = sessionStorage.getItem('userData');
@@ -20,52 +21,23 @@ function App() {
                {
                 location.pathname !=='/'? <Admin /> :''
                }
-              <Container>
-              <Routes>
-                    <Route path='/' element={<Home />} />
-                    {/* admin */}
-                    <Route path="/admin/card/add" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
-                    <Route path="/admin/card/edit/:id" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
-                    <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
-                    <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
-                    {/* users */}
-                    <Route path='/user/details/:id' element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
-                    <Route path='/user/edit/:id' element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
-                </Routes>
-              </Container>
+               <div className='container' >
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        {/* admin */}
+                        <Route path="/admin/card/add" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
+                        <Route path="/admin/card/edit/:id" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
+                        <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
+                        <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
+                        <Route path='/user/edit/:id' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
+                        {/* users */}
+                        <Route path='/user/details/:id' element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
+                        <Route path='/user/edit/:id' element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
+                        <Route path='/card/:id' element={<CardDetails />}/>
+                    </Routes>
+                </div>
+                
         </div>
     );
 }
 export default App;
-
-
-{
-/* <Routes>
-<Route path='/' element={<Login />} />
-
-<Route path='/login'>
-
-  <Route path='view/:id' element={<Details />} />
-</Route>
-<Route path='/signup' element={<Home />} />
-<Route path='/signup/:id' element ={<Home />} />
-<Route path='/register' element={<SignUp />} />
-
-<Route path="/forgot-password" element={<ForgotPassword />} />
-<Route  path='/vcard' element={<ViewCards />}/>
-</Routes> 
-*/
-}
-
-// <Routes>
-// <Route path='/' element={<Home />} />
-// <Route path='/admin' element={<Login />} />
-// <Route path='/login' element={<Login />} />
-// <Route path='vcard/:id' 
-//     element={
-//         <ProtectedRoute>
-//             <Details />
-//         </ProtectedRoute>
-//     } />
-
-// </Routes>

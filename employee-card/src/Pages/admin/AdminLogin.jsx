@@ -2,9 +2,10 @@ import React , { useState} from 'react'
 import { Row, Col,Form, InputGroup, Image } from 'react-bootstrap'
 import { signInWithEmailAndPassword, signInWithPhoneNumber, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../firebase'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Notification from '../Notification/Notification';
-import logo from '../../Common/Images/lookatmeprintLogo.png';
+import banner from '../../assets/banner.jpg';
+import logo from '../../assets/brand.png';
 import { getDatabase, ref, onValue} from 'firebase/database';
 
 const AdminLogin = () => {
@@ -12,6 +13,9 @@ const AdminLogin = () => {
     const [role, setRole]=useState(null);
     const [data, setData]=useState([])
     const navigate=useNavigate();
+    const locationData = useLocation();
+    const page = locationData.pathname === '/user' ? "User Login" : "Admin Login";
+
     const [authDetail, setAuthDetail] = useState({
         email:'',
         password:''
@@ -35,13 +39,11 @@ const AdminLogin = () => {
             userData['userRole'] = postData.role; // admin or user
             userData['token'] = token;
             sessionStorage.setItem("userData", JSON.stringify(userData) );
-            if(postData.role === 'admin')
-           {
-            navigate(`/admin/vcard`);
+            if(postData.role === 'admin') {
+                navigate(`/admin/vcard`);
            }
-           if(postData.role ==='customer')
-           {
-            navigate(`/user/details/${userId}`)
+           if(postData.role ==='customer') {
+                navigate(`/user/details/${userId}`)
            }
         });
     }
@@ -52,6 +54,7 @@ const AdminLogin = () => {
             const token = await user.getIdToken();
                 getUserData(user.uid, token);
         } catch (error) {
+            alert(`Wrong Email or Password `)
             console.error('Error signing in:', error);
         }
     };
@@ -67,59 +70,44 @@ const AdminLogin = () => {
 
 
   return (
-    <div className='container '>
-        <Row>
-            <Notification title='LookAtMePrint'/>
-        </Row>
-        <br/>
-        <Row >
-            <Col xs={12} sm={6} md={6} lg={4}>
-                <Image src={logo} fluid/>
+    <div className='container' style={{marginTop: '30px'}}>
+        <Row className='mt-4'>
+            <Col style={{textAlign: 'center'}} xs={12} sm={6} md={6} lg={6}>
+                <Image src={banner} style={{borderRadius:'5px'}} fluid />
             </Col>
-            <Col xs={12} sm={6} md={6} lg={6}>
-                <Form>
-                    <InputGroup hasValidation>
-                        <InputGroup.Text>email</InputGroup.Text>
-                        <Form.Control type="email" name='email' onChange={handleChange}/>
-                        <Form.Control.Feedback type="invalid">
-                        Please choose a phone.
-                        </Form.Control.Feedback>
-                    </InputGroup>
-                    <br/>
-                    <InputGroup hasValidation>
-                        <InputGroup.Text>password</InputGroup.Text>
-                        <Form.Control type="password" name='password' onChange={handleChange}/>
-                        <Form.Control.Feedback type="invalid">
-                        Please choose a password.
-                        </Form.Control.Feedback>
-                    </InputGroup>
-                    {/* <Row>
-                        <Col xs={12} sm={6} md={6} lg={6}>
-                        </Col>
-                        <Col xs={12} sm={6} md={6} lg={6}>
-                            <NavLink className='text-primary' to='/forgot-password'>Forgot password
-                            </NavLink>
-                        </Col>
-                    </Row> */}
-                    <br/>
-                    <Row>
-                        <Col xs={12} sm={6} md={6} lg={6} >
-                            <div className='btn btn-primary w-100 mt-2' onClick={(e)=>handleLogin(e)}>Login</div>
-                        </Col>
-                        {/* <Col xs={12} sm={6} md={6} lg={6}>
-                            <div className='btn btn-secondary w-100 mt-2' onClick={()=>{navigate('/signup')}}>Create New acount</div>
-                        </Col> */}
-                    </Row>
-                </Form>
+            <Col xs={12} sm={6} md={6} lg={6} style={{margin:"0px"}} >
+                <div className='p-5' >
+                    <div className="text-center">
+                        <Image width={120} src={logo} style={{borderRadius:'5px', textAlign: 'center'}} fluid />
+                        <div className="h4 p-3" style={{color:"#1e1545", fontWeight:"800"}}>NFC Card - {page}</div>
+                    </div>
+                    <Form className='form-harizontal'>
+                        <div>
+                            <Form.Group>
+                                <Form.Control className='form-control form-control-lg' type="email" name='email' placeholder='Email' onChange={handleChange} />
+                            </Form.Group>
+                        </div>
+                        <div className='mt-4'>
+                            <Form.Group>
+                                <Form.Control className='form-control form-control-lg' type="password" name='password' placeholder='Password' onChange={handleChange} />
+                            </Form.Group>
+                        </div>
+                        <div className="mt-4">
+                            <Row>
+                                <Col xs={12} sm={6} md={6} lg={6} >
+                                    <div className='btn d-block btn-lg' style={{background: "#F4B11E", color: "#ffffff", marginBottom:'10px'}} onClick={(e)=>handleLogin(e)}>Login</div>
+                                </Col>
+                                <br />
+                                <Col xs={12} sm={6} md={6} lg={6}>
+                                    <div className='btn btn-secondary d-block btn-lg' onClick={()=>{navigate('/')}}>Back</div>
+                                </Col>
+                            </Row>
+                        </div>                        
+                    </Form>
+                </div>
+                
             </Col>
         </Row>
-        <br/>
-        <Row>
-            <Col xs={12} sm={10} md={10} lg={10}>
-            <div className='text'> © {`${currentYear}`}, 24X7 sec, Inc. or its affiliates. All rights reserved.</div>
-            </Col>
-        </Row>
-        <br/>
     </div>
   )
 }

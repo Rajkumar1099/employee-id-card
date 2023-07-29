@@ -39,6 +39,7 @@ const ViewCards = () => {
           };
           fetchPosts();
       },[])
+
   return (
     <div>
         <Row>

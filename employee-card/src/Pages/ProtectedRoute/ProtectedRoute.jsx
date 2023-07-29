@@ -1,6 +1,5 @@
 // ProtectedRoute.js
 import React from 'react';
-
 const ProtectedRoute = ({children}) => {
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);

@@ -10,7 +10,8 @@ import { TbWorld } from 'react-icons/tb';
 import dummyuser from '../assets/dummyuser.jpg';
 
 const Cards = ({userValue}) => {
-    
+
+    // console.log('value', Object.values(userValue).includes(whats_app))
   return (
     <div>
     <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} >
@@ -27,17 +28,17 @@ const Cards = ({userValue}) => {
             <Row>
             <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Contact Data</Card.Title>
                 <Col xs={12} style={{textAlign:'left'}}>
-                    <Card.Text ><BsFillTelephoneFill style={{color:'#5F8CBF'}}/> {userValue?.contact}</Card.Text>
-                    <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text>
-                    <Card.Text ><TbWorld style={{color:'grey'}}/> {userValue?.company_name}</Card.Text>
-                    <Card.Text ><HiOutlineMail style={{color:'red'}} /> {userValue?.email}</Card.Text>
+                    {userValue?.contact  ? <Card.Text ><BsFillTelephoneFill style={{color:'#5F8CBF'}}/> {userValue?.contact}</Card.Text> :'' }
+                    {userValue?.whats_app  ? <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text> :''}
+                    {userValue?.company_name ?<Card.Text ><TbWorld style={{color:'grey'}}/> {userValue?.company_name}</Card.Text>:''} 
+                    {userValue?.email ? <Card.Text ><HiOutlineMail style={{color:'red'}} /> {userValue?.email}</Card.Text> :''}
                 </Col>
             </Row>
             <br />
             <Row>
                 <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Address Data</Card.Title>
                 <Col xs={12} style={{textAlign:'left'}}>
-                <Card.Text ><MdOutlineLocationOn style={{color:'red'}} />{userValue?.address}</Card.Text>
+                {userValue?.address ? <Card.Text ><MdOutlineLocationOn style={{color:'red'}} />{userValue?.address}</Card.Text> :''} 
                 </Col>
             </Row>
         </Card.Body>
