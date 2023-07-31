@@ -39,6 +39,14 @@ const FormVcard = () => {
            lastname:lastname,
             email: email,
             contact: contact,
+            address:'',
+            img_url:'',
+            linkedIn:'',
+            twitter:'',
+            instagram:'',
+            facebook:'',
+            role:'',
+            company_name:'',
             created_at: new Date().toJSON()
         };
         // Get a key for a new Post.

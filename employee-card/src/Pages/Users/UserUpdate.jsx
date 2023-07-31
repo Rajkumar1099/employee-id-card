@@ -44,9 +44,6 @@ const UserUpdate = () => {
             [name]:value
         })
     };
-    const handleCreateData=(e)=>{
-        e.preventDefault();
-    };
     async function uploadFileAndPostUrl(file) {
         try {
             const storage = getStorage();
@@ -63,23 +60,23 @@ const UserUpdate = () => {
         }
     }
 
-    function writeNewPost( firstname, lastname, address, email, contact, img_url, company_name,role, twitter, instagram, facebook, linkedIn) {
+    function writeNewPost(userData) {
         const db = getDatabase();
         const user = auth.currentUser;
         // A post entry.
         const postData = {
-            firstname:firstname,
-            lastname:lastname,
-            address: address,
-            email: email,
-            contact: contact,
+            firstname:userData.firstname,
+            lastname:userData.lastname,
+            address: userData.address,
+            email: userData.email,
+            contact: userData.contact,
             img_url:img_url,
-            role:role,
-            company_name:company_name,
-            twitter:twitter,
-            linkedIn:linkedIn,
-            instagram:instagram,
-            facebook:facebook,
+            role:userData.role,
+            company_name:userData.company_name,
+            twitter:userData.twitter,
+            linkedIn:userData.linkedIn,
+            instagram:userData.insta,
+            facebook:userData.facebook,
             created_at: new Date().toJSON()
         };
         // Get a key for a new Post.
@@ -91,12 +88,12 @@ const UserUpdate = () => {
         // updates['/user-posts/' + uid + '/' + newPostKey] = postData
         return update(ref(db), updates);
     }
-  
     const handleSubmit = (e) => {
       e.preventDefault();
-      writeNewPost( userData.firstname, userData.lastname, userData.address, userData.email, userData.contact, profileUrl, userData.company_name, userData.role, userData.twitter, userData.instagram, userData.facebook, userData.linkedIn);
-      // Handle form submission logic here
+       writeNewPost( userData);
+      // // Handle form submission logic here
       // You can access the form data using the state variables
+      console.log('user', userData)
     };
     
     useEffect(() => {
@@ -141,7 +138,7 @@ const UserUpdate = () => {
             <fieldset>
               <h2 className="fs-title">Social Networks</h2>
               <h3 className="fs-subtitle">Your presence on the social network</h3>
-              <input type="text" name="LinkedIn" placeholder="LinkedIn" onChange={handleChange}/>
+              <input type="text" name="linkedIn" placeholder="LinkedIn" onChange={handleChange}/>
               <input type="text" name="twitter" placeholder="Twitter" onChange={handleChange}/>
               <input type="text" name="insta" placeholder="Instagram" onChange={handleChange}/>
               <input type='text' name='facebook' placeholder='Facebook' onChange={handleChange} />

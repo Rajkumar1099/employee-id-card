@@ -29,7 +29,7 @@ function App() {
                         <Route path="/admin/card/edit/:id" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
                         <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
                         <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
-                        <Route path='/user/edit/:id' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
+                        <Route path='/admin/edit/:id' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
                         {/* users */}
                         <Route path='/user/details/:id' element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
                         <Route path='/user/edit/:id' element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />

@@ -20,8 +20,16 @@ function Details() {
     const [userValue, setUserValue] = useState(null);
     const navigate= useNavigate()
     const db = getDatabase();
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null
     const handleEdite=()=>{
-        navigate(`/user/edit/${id}`);
+        if ( userRole == 'customer'){
+            navigate(`/user/edit/${id}`);
+        }
+        if ( userRole == 'admin'){
+            navigate(`/admin/edit/${id}`);
+        }
     }
     useEffect(() => {
         const fetchPosts = async () => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Image, Row, Col } from 'react-bootstrap'
-import { useBarcode } from 'react-barcodes';
 import { NavLink } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs'
 import {BiLogoWhatsapp} from 'react-icons/bi'
