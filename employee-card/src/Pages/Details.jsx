@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { getDatabase, ref, onValue, off } from 'firebase/database';
-import { Card, Button, Image, Row,Col } from 'react-bootstrap';
+import { Card, Button, Image, Row,Col, Badge } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {BiLogoWhatsapp} from 'react-icons/bi';
@@ -66,10 +66,52 @@ function Details() {
                 <div>
                     <Row>
                         <Col xs={12} style={{textAlign:'left'}}>
-                            {userValue?.company_name ?<Card.Text ><TbWorld style={{color:'#fbaa19'}}/> {userValue?.company_name}</Card.Text>:''}
-                            {userValue?.email ? <Card.Text ><HiOutlineMail style={{color:'#fbaa19'}} /> {userValue?.email}</Card.Text> :''}
-                            {userValue?.contact  ? <Card.Text ><BsFillTelephoneFill style={{color:'#fbaa19'}}/> {userValue?.contact}</Card.Text> :'' }
-                            {userValue?.whats_app  ? <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text> :''}
+                            {userValue?.company_name ?
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <TbWorld style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.company_name}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            }
+                            {userValue?.email ?
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <HiOutlineMail style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Email
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.email}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            }
+                            
+                            {userValue?.contact ?
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <BsFillTelephoneFill style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Phone
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.contact}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            }
+                            
+                            {userValue?.whats_app ?
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <BsFillTelephoneFill style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Whatsapp
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >: &nbsp;&nbsp;{userValue?.whats_app}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            }
                         </Col>
                     </Row>
                 </div>
@@ -84,14 +126,55 @@ function Details() {
                 </Row>
                 <h3 className="h4 fs-subtitle">Social Networks</h3>
                 <hr />
-                
                 <div>
                     <Row>
                         <Col xs={12} style={{textAlign:'left'}}>
-                            {userValue?.linkedIn  ? <Card.Text ><AiFillLinkedin style={{color:'#fbaa19'}}/> {userValue?.linkedIn}</Card.Text> :'' }
-                            {userValue?.twitter  ? <Card.Text ><BiLogoTwitter style={{color:'green'}}/> {userValue?.twitter}</Card.Text> :''}
-                            {userValue?.insta ?<Card.Text ><FaInstagramSquare style={{color:'#fbaa19'}}/> {userValue?.insta}</Card.Text>:''} 
-                            {userValue?.facebook ? <Card.Text ><AiFillFacebook style={{color:'#fbaa19'}} /> {userValue?.facebook}</Card.Text> :''}
+                            {userValue?.linkedIn  ? 
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <AiFillLinkedin style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.linkedIn}</div>
+                                    </Col>
+                                </Row>
+                            :''
+                            }
+                            {
+                            userValue?.twitter  ?
+                            <Row>
+                                <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                    <BiLogoTwitter style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                </Col>                                
+                                <Col xs={6} md={6} sm={6} lg={6} >
+                                    <div >:&nbsp;&nbsp;{userValue?.twitter}</div>
+                                </Col>
+                            </Row>
+                            :''
+                             }
+                            {userValue?.insta ?
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <FaInstagramSquare style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.twitter}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            } 
+                            {userValue?.facebook ? 
+                                <Row>
+                                    <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                        <AiFillFacebook style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                    </Col>                                
+                                    <Col xs={6} md={6} sm={6} lg={6} >
+                                        <div >:&nbsp;&nbsp;{userValue?.facebook}</div>
+                                    </Col>
+                                </Row>
+                                :''
+                            // <Card.Text ><AiFillFacebook style={{color:'#fbaa19'}} /><Badge bg='secondary'>facebook</Badge> {userValue?.facebook}</Card.Text> :''
+                            }
                         </Col>
                     </Row>
                 </div>
@@ -111,7 +194,17 @@ function Details() {
                     <Row>
                         <Card.Text ></Card.Text>
                         <Col xs={12} style={{textAlign:'left'}}>
-                        {userValue?.address ? <Card.Text ><MdOutlineLocationOn style={{color:'#fbaa19'}} />{userValue?.address}</Card.Text> :''} 
+                        {userValue?.address ? 
+                         <Row>
+                         <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                             <MdOutlineLocationOn style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                         </Col>                                
+                         <Col xs={6} md={6} sm={6} lg={6} >
+                             <div >:&nbsp;&nbsp;{userValue?.address}</div>
+                         </Col>
+                     </Row>
+                     :''
+                        } 
                         </Col>
                     </Row>
                 </div>
