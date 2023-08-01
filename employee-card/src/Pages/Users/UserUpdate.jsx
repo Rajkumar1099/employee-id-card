@@ -5,16 +5,29 @@ import {  getDatabase,ref, child, push, update , onValue} from "firebase/databas
 import { getStorage ,getDownloadURL,uploadBytes,ref as storageRef} from 'firebase/storage';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../assets/css/style.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetails } from '../../Redux/User/Action';
 
 const UserUpdate = () => {
-    const {id} =useParams();
-    const[error, setError] = useState(false);
-    const[userId, setUserId] = useState('');
+    const {id, steps} =useParams();
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null
+    const [firstname, setFirstName]=useState('')
+    const [lastname, setLastName] =useState('')
+    const [email,setEmail] = useState('')
+    const [contact, setContact] =useState('')
+    const [linkedIn, setLinkedIn] =useState('')
+    const [twitter, setTwitter] =useState('')
+    const [facebook, setFacebook] =useState('')
+    const [insta, setInsta] =useState('')
+    const [address, setAddress] =useState('')
+    const [role, setRole] =useState('')
+    const [company, setCompany] =useState('')
+
     const navigate=useNavigate();
-    const[profileUrl, setprofileUrl] = useState(null);  
+    const [profileUrl, setprofileUrl] = useState(null);
     const [step, setStep] = useState(1);
-    const db = getDatabase();
-    const [userValue, setUserValue] = useState(null);
 
     const nextStep = () => {
       setStep((prevStep) => prevStep + 1);
@@ -23,27 +36,7 @@ const UserUpdate = () => {
     const prevStep = () => {
       setStep((prevStep) => prevStep - 1);
     };
-    const [userData, setUserData] = useState({
-        firstname:'',
-        lastname:'',
-        email:'',
-        address:'',
-        contact:'',
-        img_url:'',
-        linkedIn:'',
-        twitter:'',
-        instagram:'',
-        facebook:'',
-        role:'',
-        company_name:''
-    });
-    const handleChange=(e)=>{
-    const {name , value} = e.target;
-        setUserData({
-            ...userData,
-            [name]:value
-        })
-    };
+
     async function uploadFileAndPostUrl(file) {
         try {
             const storage = getStorage();
@@ -60,57 +53,76 @@ const UserUpdate = () => {
         }
     }
 
-    function writeNewPost(userData) {
+    function updateCard() {
         const db = getDatabase();
         const user = auth.currentUser;
         // A post entry.
         const postData = {
-            firstname:userData.firstname,
-            lastname:userData.lastname,
-            address: userData.address,
-            email: userData.email,
-            contact: userData.contact,
-            img_url:img_url,
-            role:userData.role,
-            company_name:userData.company_name,
-            twitter:userData.twitter,
-            linkedIn:userData.linkedIn,
-            instagram:userData.insta,
-            facebook:userData.facebook,
+            firstname:firstname,
+            lastname:lastname,
+            address: address,
+            email: email,
+            contact: contact,
+            // img_url:profileUrl,
+            role:role,
+            company_name:company,
+            twitter:twitter,
+            linkedIn:linkedIn,
+            insta:insta,
+            facebook:facebook,
             created_at: new Date().toJSON()
         };
-        // Get a key for a new Post.
         const newPostKey = push(child(ref(db), 'posts')).key;
-        // Write the new post's data simultaneously in the posts list and the user's post list.
-        setUserId(newPostKey)
         const updates = {};
-        updates['/posts/' + userId] = postData;
-        // updates['/user-posts/' + uid + '/' + newPostKey] = postData
+        updates['/posts/' + id] = postData;
         return update(ref(db), updates);
     }
+
     const handleSubmit = (e) => {
       e.preventDefault();
-       writeNewPost( userData);
-      // // Handle form submission logic here
-      // You can access the form data using the state variables
-      console.log('user', userData)
+        updateCard();
+        if(userRole==='admin')
+        {
+            navigate(`/vcard/${id}`)
+        }
+        if(userRole ==='customer')
+        {
+            navigate(`/user/details/${id}`)
+        }
     };
     
-    useEffect(() => {
+    useEffect(()=>{
+        const db=getDatabase();
         const fetchPosts = async () => {
             const postsRef = ref(db, 'posts/' + id);
             const onDataUpdate = (snapshot) => {
                 const postData = snapshot.val() !== null ? snapshot.val() : [];
-                setUserValue(postData);
+                setFirstName(postData.firstname)
+                setLastName(postData.lastname)
+                setEmail(postData.email)
+                setLinkedIn(postData.linkedIn)
+                setContact(postData.contact)
+                setAddress(postData.address)
+                setContact(postData.contact)
+                setTwitter(postData.twitter)
+                setFacebook(postData.facebook)
+                setInsta(postData.insta)
+                setCompany(postData.company_name)
+                setRole(postData.role)
             };
             onValue(postsRef, onDataUpdate);
-            // Clean up the listener when the component unmounts
             return () => {
-                off(postsRef, onDataUpdate);
+              off(postsRef, onDataUpdate);
             };
-        };
-        fetchPosts();
-    }, [db, id]);
+          };
+          fetchPosts();
+    },[])
+    useEffect(()=>{
+        if( steps > 1 || steps > 3) {
+            setStep(steps-1);
+            nextStep();
+          }
+    },[])
   return (
     <div className="row">
       <div className="col-md-12 col-md-offset-3">
@@ -126,9 +138,9 @@ const UserUpdate = () => {
             <fieldset>
               <h2 className="fs-title">Personal Details</h2>
               <h3 className="fs-subtitle">Tell us something more about you</h3>
-              <input type="text" name="firstname" placeholder="First Name" onChange={handleChange}/>
-              <input type="text" name="lastname" placeholder="Last Name" onChange={handleChange}/>
-              <input type="text" name="contact" placeholder="Phone" onChange={handleChange}/>
+              <input type="text" name="firstname" placeholder="First Name" value={firstname || ''}  onChange={(e)=>setFirstName(e.target.value)}/>
+              <input type="text" name="lastname" placeholder="Last Name"  value={lastname || ''} onChange={(e)=>setLastName(e.target.value)} />
+              <input type="text" name="contact" placeholder="Phone" value={contact || ''} onChange={(e)=>setContact(e.target.value)}/>
               <button type="button" className="next action-button" onClick={nextStep}>
                 NEXT
               </button>
@@ -138,10 +150,11 @@ const UserUpdate = () => {
             <fieldset>
               <h2 className="fs-title">Social Networks</h2>
               <h3 className="fs-subtitle">Your presence on the social network</h3>
-              <input type="text" name="linkedIn" placeholder="LinkedIn" onChange={handleChange}/>
-              <input type="text" name="twitter" placeholder="Twitter" onChange={handleChange}/>
-              <input type="text" name="insta" placeholder="Instagram" onChange={handleChange}/>
-              <input type='text' name='facebook' placeholder='Facebook' onChange={handleChange} />
+              <input type="text" name="linkedIn" placeholder="LinkedIn" value={linkedIn || ''} onChange={(e)=>setLinkedIn(e.target.value)}/>
+              <input type="text" name="twitter" placeholder="Twitter" value={twitter} onChange={(e)=>setTwitter(e.target.value)}/>
+              <input type="text" name="insta" placeholder="Instagram" value={insta} onChange={(e)=>setInsta(e.target.value)}/>
+              <input type='text' name='facebook' placeholder='Facebook' value={facebook} onChange={(e)=>setFacebook(e.target.value)} />
+              {/* <input type='text' name='thread' placeholder='Thread' value={thread} onChange={(e)=>set(e.target.value)} /> */}
               <button type="button" className="previous action-button-previous" onClick={prevStep}>
               PREVIOUS
               </button>
@@ -154,11 +167,11 @@ const UserUpdate = () => {
             <fieldset>
               <h2 className="fs-title">Create your account</h2>
               <h3 className="fs-subtitle">Fill in your credentials</h3>
-              <input type="text" name="email" placeholder="Email" onChange={handleChange}/>
-              <input type="text" name="role" placeholder="Designation" onChange={handleChange}/>
-              <input type="text" name="company_name" placeholder="Company" onChange={handleChange}/>
-              <input type='file' name='img_url' onChange={(e) => uploadFileAndPostUrl(e.target.files[0])}/>
-              <input type='text' name='address' placeholder='Address' />
+              <input type="text" name="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <input type="text" name="role" placeholder="Designation" value={role} onChange={(e)=>setRole(e.target.value)}/>
+              <input type="text" name="company_name" placeholder="Company" value={company} onChange={(e)=>setCompany(e.target.value)}/>
+              {/* <input type='file' name='img_url' value={} onChange={(e) => uploadFileAndPostUrl(e.target.files[0])}/> */}
+              <input type='text' name='address' placeholder='Address' value={address || ''} onChange={(e)=>setAddress(e.target.value)} />
               <button type="button" className="previous action-button-previous" onClick={prevStep}>
                 PREVIOUS
               </button>

@@ -15,7 +15,6 @@ function App() {
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);
     const userRole = userData !== null ? userData.userRole : null;
-
     return (
         <div className="App">
                {
@@ -26,17 +25,16 @@ function App() {
                         <Route path='/' element={<Home />} />
                         {/* admin */}
                         <Route path="/admin/card/add" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
-                        <Route path="/admin/card/edit/:id" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
+                        {/* <Route path="/admin/card/edit/:id" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} /> */}
                         <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
                         <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
                         <Route path='/admin/edit/:id' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
                         {/* users */}
-                        <Route path='/user/details/:id' element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
-                        <Route path='/user/edit/:id' element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
-                        <Route path='/card/:id' element={<CardDetails />}/>
+                        <Route path='/user/details/:id' exact element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
+                        <Route path='/user/edit/:id/:steps' exact  element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
+                        <Route path='/card/:id' exact element={<CardDetails />}/>
                     </Routes>
                 </div>
-                
         </div>
     );
 }

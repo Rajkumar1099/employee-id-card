@@ -43,7 +43,7 @@ const FormVcard = () => {
             img_url:'',
             linkedIn:'',
             twitter:'',
-            instagram:'',
+            insta:'',
             facebook:'',
             role:'',
             company_name:'',

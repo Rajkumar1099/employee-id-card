@@ -14,20 +14,23 @@ import { AiFillFacebook } from 'react-icons/ai'
 import { FaInstagramSquare } from 'react-icons/fa'
 import dummyuser from '../assets/dummyuser.jpg';
 import '../assets/css/style.css';
+import { getUserDetails } from '../Redux/User/Action';
+import { useDispatch } from 'react-redux';
 
 function Details() {
     const {id} =useParams();
+    const dispatch=useDispatch();
     const [userValue, setUserValue] = useState(null);
     const navigate= useNavigate()
     const db = getDatabase();
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);
     const userRole = userData !== null ? userData.userRole : null
-    const handleEdite=()=>{
+    const handleEdite=(steps)=>{
         if ( userRole == 'customer'){
-            navigate(`/user/edit/${id}`);
+            navigate(`/user/edit/${id}/${steps}`);
         }
-        if ( userRole == 'admin'){
+        if( userRole == 'admin'){
             navigate(`/admin/edit/${id}`);
         }
     }
@@ -39,13 +42,12 @@ function Details() {
             setUserValue(postData);
           };
           onValue(postsRef, onDataUpdate);
-          // Clean up the listener when the component unmounts
           return () => {
             off(postsRef, onDataUpdate);
           };
         };
         fetchPosts();
-      }, [db, id]);
+      }, []);
   return (
     <div className="row">
         <div id="msform" className="col-md-12 col-md-offset-3">
@@ -53,10 +55,8 @@ function Details() {
                 <Row>
                     <Col xs={12} md={12} lg={12}>
                         <Image  src={userValue?.img_url ? userValue?.img_url : dummyuser } width={120} roundedCircle />
-                        <AiTwotoneEdit className='edit-btn' onClick={handleEdite} />
+                        <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(1)} />
                     </Col>
-                    <div className="h2 fs-title">{userValue?.firstname} {userValue?.lastname}</div>
-                    <div className="h6">{userValue?.role}</div>    
                 </Row>
                 <div className="h2 fs-title">{userValue?.firstname} {userValue?.lastname}</div>
                 <div className="h6">{userValue?.role}</div>
@@ -65,13 +65,11 @@ function Details() {
                 <hr />
                 <div>
                     <Row>
-                        <Card.Text >{userValue?.role}-{userValue?.firstname}</Card.Text>
                         <Col xs={12} style={{textAlign:'left'}}>
                             {userValue?.company_name ?<Card.Text ><TbWorld style={{color:'#fbaa19'}}/> {userValue?.company_name}</Card.Text>:''}
                             {userValue?.email ? <Card.Text ><HiOutlineMail style={{color:'#fbaa19'}} /> {userValue?.email}</Card.Text> :''}
                             {userValue?.contact  ? <Card.Text ><BsFillTelephoneFill style={{color:'#fbaa19'}}/> {userValue?.contact}</Card.Text> :'' }
                             {userValue?.whats_app  ? <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text> :''}
-                            
                         </Col>
                     </Row>
                 </div>
@@ -82,7 +80,7 @@ function Details() {
                 <Row>
                     <Col xs={12} md={10} lg={10}>
                     </Col>
-                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
+                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={()=>handleEdite(2)} /></Col>
                 </Row>
                 <h3 className="h4 fs-subtitle">Social Networks</h3>
                 <hr />
@@ -104,7 +102,7 @@ function Details() {
                 <Row>
                     <Col xs={12} md={10} lg={10}>
                     </Col>
-                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
+                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={()=>handleEdite(3)} /></Col>
                 </Row>
                 <h3 className="h4 fs-subtitle">Personal Details</h3>
                 <hr />

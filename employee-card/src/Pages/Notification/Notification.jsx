@@ -5,5 +5,4 @@ const Notification = ({title}) => {
     <div className="moving-message">{` Welcome to our ${title} ! `}</div>
   )
 }
-
 export default Notification
