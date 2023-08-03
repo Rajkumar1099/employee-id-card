@@ -1,5 +1,5 @@
 import React ,{useEffect, useState}from 'react'
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue , remove} from 'firebase/database';
 import { Row ,Col} from 'react-bootstrap';
 import Cards from './Cards';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -16,6 +16,21 @@ const ViewCards = () => {
         e.preventDefault();
         navigate('/admin/card/add')
     }
+
+    const deleteItemByKey = (itemKey) => {
+        console.log('id', itemKey)
+        const db = getDatabase();
+        const databaseRef = ref(db, 'posts'); // Replace 'post' with the path to the item's parent node in the database
+      
+        // Get a reference to the specific item using its key and call remove() to delete it
+        remove(ref(databaseRef,itemKey))
+          .then(() => {
+            console.log('Item deleted successfully!');
+          })
+          .catch((error) => {
+            console.error('Error deleting item:', error);
+          });
+      };
 
     useEffect(()=>{
         const db = getDatabase();
@@ -38,21 +53,25 @@ const ViewCards = () => {
             });
           };
           fetchPosts();
-      },[])
+      },[data.length])
 
   return (
-    <div>
-        <Row>
+    <div style={{minHeight:'100vh'}}>
+        <Row className='p-4'>
             <Col xs={12} md={10} lg={10}></Col>
             <Col xs={12} md={10} lg={2}>
-                <div className='btn btn-primary' onClick={handleCreateUser}>Create New User</div>
+                <div className='btn btn-secondary' onClick={handleCreateUser}>Create New User</div>
             </Col>
         </Row>
         <Row xs="auto">
             {
-            data ?.map((value, i) => {
-              return (<Cards key={i} userValue={value} />)
+            data.length > 0 
+            ? data ?.map((value, i) => {
+              return (<Cards key={i} userValue={value} deleteItemByKey={deleteItemByKey}/>)
               })
+              : <div className='container'> 
+              <div className='h3'>No Item exist</div>
+               </div>
             }
         </Row>
     </div>

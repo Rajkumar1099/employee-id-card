@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Form,Row, Col, InputGroup, Card ,Tabs,Tab} from 'react-bootstrap'
 import { database , auth} from '../../firebase';
-import {  getDatabase,ref, child, push, update , onValue} from "firebase/database";
+import {  getDatabase,ref, child, push, update , onValue,off} from "firebase/database";
 import { getStorage ,getDownloadURL,uploadBytes,ref as storageRef} from 'firebase/storage';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../assets/css/style.css';
@@ -124,7 +124,7 @@ const UserUpdate = () => {
           }
     },[])
   return (
-    <div className="row">
+    <div className="row" style={{height:'100vh', paddingTop:'40px'}}>
       <div className="col-md-12 col-md-offset-3">
         <form id="msform">
           {/* progressbar */}

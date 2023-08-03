@@ -25,12 +25,12 @@ const AdminDashboard = () => {
                 </Navbar.Brand>
                 {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
                 <Nav>
-                    <NavLink to='/admin/vcard'>
+                    <NavLink to='/admin/vcard' replace={true}>
                         {/* Vcard */}
                     </NavLink>
                 </Nav>
                 <Nav>
-                    <NavLink to='/user'>
+                    <NavLink to='/user' replace={true}>
                         {/*user  Vcard */}
                     </NavLink>
                 </Nav>

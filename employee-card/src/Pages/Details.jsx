@@ -31,7 +31,7 @@ function Details() {
             navigate(`/user/edit/${id}/${steps}`);
         }
         if( userRole == 'admin'){
-            navigate(`/admin/edit/${id}`);
+            navigate(`/admin/edit/${id}/${steps}`);
         }
     }
     useEffect(() => {
@@ -88,7 +88,6 @@ function Details() {
                                 </Row>
                                 :''
                             }
-                            
                             {userValue?.contact ?
                                 <Row>
                                     <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
@@ -100,7 +99,6 @@ function Details() {
                                 </Row>
                                 :''
                             }
-                            
                             {userValue?.whats_app ?
                                 <Row>
                                     <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
@@ -132,7 +130,7 @@ function Details() {
                             {userValue?.linkedIn  ? 
                                 <Row>
                                     <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
-                                        <AiFillLinkedin style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                        <AiFillLinkedin style={{color:'#fbaa19'}}/>&nbsp;&nbsp;LinkedIn
                                     </Col>                                
                                     <Col xs={6} md={6} sm={6} lg={6} >
                                         <div >:&nbsp;&nbsp;{userValue?.linkedIn}</div>
@@ -144,7 +142,7 @@ function Details() {
                             userValue?.twitter  ?
                             <Row>
                                 <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
-                                    <BiLogoTwitter style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                    <BiLogoTwitter style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Twitter
                                 </Col>                                
                                 <Col xs={6} md={6} sm={6} lg={6} >
                                     <div >:&nbsp;&nbsp;{userValue?.twitter}</div>
@@ -155,7 +153,7 @@ function Details() {
                             {userValue?.insta ?
                                 <Row>
                                     <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
-                                        <FaInstagramSquare style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                        <FaInstagramSquare style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Instagram
                                     </Col>                                
                                     <Col xs={6} md={6} sm={6} lg={6} >
                                         <div >:&nbsp;&nbsp;{userValue?.twitter}</div>
@@ -163,17 +161,16 @@ function Details() {
                                 </Row>
                                 :''
                             } 
-                            {userValue?.facebook ? 
+                            { userValue?.facebook ? 
                                 <Row>
                                     <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
-                                        <AiFillFacebook style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
+                                        <AiFillFacebook style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Facebook
                                     </Col>                                
                                     <Col xs={6} md={6} sm={6} lg={6} >
                                         <div >:&nbsp;&nbsp;{userValue?.facebook}</div>
                                     </Col>
                                 </Row>
                                 :''
-                            // <Card.Text ><AiFillFacebook style={{color:'#fbaa19'}} /><Badge bg='secondary'>facebook</Badge> {userValue?.facebook}</Card.Text> :''
                             }
                         </Col>
                     </Row>
@@ -195,15 +192,15 @@ function Details() {
                         <Card.Text ></Card.Text>
                         <Col xs={12} style={{textAlign:'left'}}>
                         {userValue?.address ? 
-                         <Row>
-                         <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
-                             <MdOutlineLocationOn style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Company
-                         </Col>                                
-                         <Col xs={6} md={6} sm={6} lg={6} >
-                             <div >:&nbsp;&nbsp;{userValue?.address}</div>
-                         </Col>
-                     </Row>
-                     :''
+                            <Row>
+                                <Col xs={6} md={6} sm={6} lg={6} style={{textAlign: 'right'}} >
+                                    <MdOutlineLocationOn style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Address
+                                </Col>                                
+                                <Col xs={6} md={6} sm={6} lg={6} >
+                                    <div >:&nbsp;&nbsp;{userValue?.address}</div>
+                                </Col>
+                            </Row>
+                            :''
                         } 
                         </Col>
                     </Row>

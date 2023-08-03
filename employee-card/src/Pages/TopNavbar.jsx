@@ -19,20 +19,20 @@ const TopNavbar = () => {
     console.log('userId', active , userId, id)
     const Navigation = ({ id, location }) => {
         const RenderNavLink = location.pathname === '/' ? (
-          <NavLink to='/' >
+          <NavLink to='/' replace={true}>
           </NavLink>
         ) : (
           <Navbar expand="lg" sticky="top" bg='dark' data-bs-theme="dark">
             <Container>
-              <Navbar.Brand href="/">
+              <Navbar.Brand href="/" >
                 <Image src={logo} width={50} height={50} />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
-                  <NavLink to={`login/view/${id}`} className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2 " : "text-decoration-none"}>
+                  <NavLink to={`login/view/${id}`} replace={true} className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2 " : "text-decoration-none"}>
                   </NavLink>
-                  <NavLink to='/vcard' className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2" : "text-decoration-none"}>
+                  <NavLink to='/vcard'  replace={true} className={({ isActive }) => isActive ? "text-decoration-none bg-danger text-white rounded-1 px-2" : "text-decoration-none"}>
                    Views Card
                    </NavLink>
                 </Nav>

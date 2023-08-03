@@ -51,13 +51,13 @@ const CardDetails = () => {
         <Card.Body>
             <Row>
             <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Contact Data</Card.Title>
-                <Col xs={12} style={{textAlign:'left'}}>
+               <Col xs={12} style={{textAlign:'left'}}>
                     <Card.Text ><BsFillTelephoneFill style={{color:'#5F8CBF'}}/> {userValue?.contact}</Card.Text>
                     <Card.Text ><BiLogoWhatsapp style={{color:'green'}}/> {userValue?.whats_app}</Card.Text>
                     <Card.Text ><TbWorld style={{color:'grey'}}/> {userValue?.company_name}</Card.Text>
                     <Card.Text ><HiOutlineMail style={{color:'red'}} /> {userValue?.email}</Card.Text>
                 </Col>
-            </Row>
+            </Row> 
             <br />
             <Row>
                 <Card.Title style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>Address Data</Card.Title>

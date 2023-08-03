@@ -22,14 +22,16 @@ const FormVcard = () => {
     const handleChange=(e)=>{
     const {name , value} = e.target;
         setUserData({
-            ...userData,
+           ...userData,
             [name]:value
         })
-    }
+    } 
+
     const handleCreateData=(e)=>{
         e.preventDefault();
         createUser( userData.email,userData.password, userData.contact);
     }
+
     function writeNewPost( firstname, lastname, email, contact) {
         const db = getDatabase();
         const user = auth.currentUser;
@@ -101,6 +103,14 @@ const FormVcard = () => {
         // updates['/user-posts/' + uid + '/' + newPostKey] = postData
         return update(ref(db), updates);
       }
+
+      const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleCreateData(e);
+            // console.log('value', e)
+        }
+      };
+
     useEffect(()=>{
         if(userData.firstname !=='' && userData.address!=='' && userData.email!=='' && userData.contact!=='' && userData.password !=='')
         {
@@ -111,82 +121,58 @@ const FormVcard = () => {
     },[userId])
 
   return (
-    <div style={{alignContent:'center', padding:'auto'}}>
-        <Col  xs={12} sm={6} md={6} lg={6}>
-            <br/>
-            <div className='bg-light p-5'>
-                <div className='h2'>
-                    Create Users
-                </div>
-                <br />
-                <Form>
-                    <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">First Name</InputGroup.Text>
-                    <Form.Control
-                        type='text'
-                        name='firstname'
-                        aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm"
-                        onChange={handleChange}
-                    />
-                    </InputGroup>
-                    <br/>
-                    <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">Last Name</InputGroup.Text>
-                    <Form.Control
-                        type='text'
-                        name='lastname'
-                        aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm"
-                        onChange={handleChange}
-                    />
-                    </InputGroup>
-                    <br />
-                    <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">Email</InputGroup.Text>
-                    <Form.Control 
-                        type="email"
-                        name='email'
-                        aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm"
-                        onChange={handleChange}
-                    />
-                    </InputGroup>
-                    <br />
-                    <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">Phone</InputGroup.Text>
-                    <Form.Control
-                        type='number'
-                        name='contact'
-                        aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm"
-                        onChange={handleChange}
-                    />
-                    </InputGroup>
-                    <br />
-                    <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">Password</InputGroup.Text>
-                    <Form.Control
-                        type='password'
-                        name='password'
-                        aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm"
-                        onChange={handleChange}
-                    />
-                    </InputGroup>
-                    <br/>
-                    <Row>
-                    <Col xs={12} sm={6} md={6} lg={6}>
-                        <div className='btn btn-primary w-100 m-2' onClick={(e)=>handleCreateData(e)}>Save</div>
-                    </Col>
-                    <Col xs={12} sm={6} md={6} lg={6}>
-                        <div className='btn btn-primary w-100 m-2' onClick={()=>{navigate('/admin/vcard')}}>Cancel</div>
-                    </Col>
-                    </Row>
-                </Form>
-            </div>
-        </Col>
+    <div className="row">
+    <div className="col-md-12 col-md-offset-3">
+      <form id="msform">
+          <fieldset>
+            <h2 className="fs-title">Create Users</h2>
+            <input   type='text'
+                         name='firstname'
+                         aria-label="Small"
+                         placeholder='Enter First Name'
+                         aria-describedby="inputGroup-sizing-sm"
+                         onChange={handleChange} 
+            />
+            <input   type='text'
+                         name='lastname'
+                         aria-label="Small"
+                         placeholder='Enter Last Name'
+                         aria-describedby="inputGroup-sizing-sm"
+                         onChange={handleChange} 
+            />
+             <input   type='email'
+                         name='email'
+                         aria-label="Small"
+                         placeholder='Enter Email'
+                         aria-describedby="inputGroup-sizing-sm"
+                         onChange={handleChange} 
+            />
+             <input   type='number'
+                         name='contact'
+                         aria-label="Small"
+                         placeholder='Enter Phone'
+                         aria-describedby="inputGroup-sizing-sm"
+                         onChange={handleChange} 
+            />
+            <input   type='password'
+                         name='password'
+                         aria-label="Small"
+                         placeholder='Enter Password'
+                         aria-describedby="inputGroup-sizing-sm"
+                         onKeyPress={ handleKeyPress}
+                         onChange={handleChange} 
+            />
+            <button type="submit" className="submit action-button" onClick={handleCreateData}>
+              SUBMIT
+            </button>
+            <button type="button" className="previous action-button-previous" onClick={()=>{navigate('/admin/vcard')}}>
+              Cancel
+            </button>
+          </fieldset>
+      </form>
+      {/* link to designify.me code snippets */}
     </div>
+  </div>
     )
     }
 export default FormVcard;
