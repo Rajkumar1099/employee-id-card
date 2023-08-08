@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image, Row, Col } from 'react-bootstrap'
+import { Card, Image, Row, Col, Badge } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs'
 import {BiLogoWhatsapp} from 'react-icons/bi'
@@ -18,6 +18,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
         <Card style={{width:"250px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
         <Row>
             <Col xs={12} md={10} lg={10}>
+                <Badge bg={userValue.isActive== 1 ? 'success':'danger' } >Active</Badge>
             </Col>
             <Col xs={12} md={2} lg={2} > <AiTwotoneDelete style={{color:'#fbaa19'}} onClick={()=>deleteItemByKey(userValue.id)} /></Col>
         </Row>
@@ -50,7 +51,6 @@ const Cards = ({userValue, deleteItemByKey}) => {
         </Card.Body>
         </NavLink>
         </Card>
-   
     </div>
   )
 }

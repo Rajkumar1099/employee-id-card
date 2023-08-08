@@ -7,7 +7,7 @@ import banner from '../../assets/banner.jpg';
 import logo from '../../assets/brand.png';
 import { getDatabase, ref, onValue} from 'firebase/database';
 
-const AdminLogin = () => {
+const UserLogin = () => {
     const navigate=useNavigate();
     const locationData = useLocation();
     const [showForgot, setShowForgot] = useState(false);
@@ -58,10 +58,12 @@ const AdminLogin = () => {
             userData['userId'] = userId;
             userData['isActive'] = postData?.isActive === undefined ? 0 : postData.isActive;
             userData['userRole'] = postData?.role // admin or user
-           
-            if(postData.role === 'admin') {
-                sessionStorage.setItem("userData", JSON.stringify(userData) );
-                navigate(`/admin/vcard`)
+            if(postData.role ==='customer' && postData.isActive == 1 ){
+            sessionStorage.setItem("userData", JSON.stringify(userData) );
+            navigate(`/user/details/${userId}`)
+           }
+           else{
+            alert( "Invalid Login" );
            }
         });
     }
@@ -174,7 +176,8 @@ const AdminLogin = () => {
                             <Row>
                                 <Col xs={6} sm={12} md={6} lg={6}>
                                 {
-                                    <div replace={true} className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>{navigate('/user')}}>User login</div>
+                                    <div to='/user' replace={true} className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>{navigate('/admin')}}>Admin login</div>
+                                   
                                 }
                                 </Col >
                                 <Col xs={6} sm={12} md={6} lg={6}>
@@ -201,4 +204,4 @@ const AdminLogin = () => {
     </div>
   )
 }
-export default AdminLogin;
+export default UserLogin;

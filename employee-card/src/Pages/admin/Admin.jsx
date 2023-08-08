@@ -10,7 +10,6 @@ function Admin() {
     if( userRole === undefined || userRole === null ) {
         return (
            <div>
-             <NavLink to='/' replace={true}></NavLink>
              <NavLink to='/user' replace={true}></NavLink>
              <NavLink to='/admin' replace={true}></NavLink>
            </div>

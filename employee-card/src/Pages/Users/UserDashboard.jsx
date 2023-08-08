@@ -5,7 +5,7 @@ import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import ViewCards from '../ViewCards';
 import profile from '../../assets/dummyuser.jpg'
 import logo from '../../assets/brand.png'
-const AdminDashboard = () => {
+const UserDashboard = () => {
     const {id} = useParams();
     const navigate=useNavigate();
     const [show, setShow]=useState(false);
@@ -25,18 +25,14 @@ const AdminDashboard = () => {
                     <Image src={logo} width={80} height={80} />
                 </Navbar.Brand>
                 {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-                <Nav>
-                    <NavLink to='/admin/vcard' replace={true}>
-                        {/* Vcard */}
-                    </NavLink>
-                </Nav>
+               
                 <Nav>
                     <NavLink to='/user' replace={true}>
                         {/*user  Vcard */}
                     </NavLink>
                 </Nav>
                 <Nav>
-                    <NavLink to='/admin' replace={true}>
+                    <NavLink to={`/user/details/${id}`} replace={true}>
                         {/*user  Vcard */}
                     </NavLink>
                 </Nav>
@@ -73,4 +69,4 @@ const AdminDashboard = () => {
             </Navbar>
     )
 }
-export default AdminDashboard;
+export default UserDashboard;

@@ -49,6 +49,7 @@ const FormVcard = () => {
             facebook:'',
             role:'',
             company_name:'',
+            isActive:'1',
             created_at: new Date().toJSON()
         };
         // Get a key for a new Post.
@@ -76,6 +77,7 @@ const FormVcard = () => {
     //       console.error("Error uploading file and posting URL:", error);
     //     }
     //   }
+
     const createUser = async(email,password,phone) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password, phone);
@@ -92,15 +94,14 @@ const FormVcard = () => {
         // A post entry.
         const postData = {
             role:'customer',
+            isActive:'1',
             created_at:new Date().toJSON()
         };
         // Get a key for a new Post.
         const newPostKey = push(child(ref(db), 'users')).key;
-        // Write the new post's data simultaneously in the posts list and the user's post list.
         setUserId(newPostKey)
         const updates = {};
         updates['/users/' + userId] = postData;
-        // updates['/user-posts/' + uid + '/' + newPostKey] = postData
         return update(ref(db), updates);
       }
 
@@ -114,7 +115,7 @@ const FormVcard = () => {
     useEffect(()=>{
         if(userData.firstname !=='' && userData.address!=='' && userData.email!=='' && userData.contact!=='' && userData.password !=='')
         {
-            writeNewPost( userData.firstname,userData.lastname, userData.email, userData.contact) 
+            writeNewPost( userData.firstname,userData.lastname, userData.email, userData.contact)
             createNewUsers(userData.role)
             navigate('/admin/vcard')
         }

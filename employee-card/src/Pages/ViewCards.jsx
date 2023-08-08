@@ -20,15 +20,15 @@ const ViewCards = () => {
     const deleteItemByKey = (itemKey) => {
         console.log('id', itemKey)
         const db = getDatabase();
-        const databaseRef = ref(db, 'posts'); // Replace 'post' with the path to the item's parent node in the database
-      
-        // Get a reference to the specific item using its key and call remove() to delete it
-        remove(ref(databaseRef,itemKey))
+        const postRef = ref(db, 'posts/' + itemKey);
+        remove(postRef)
           .then(() => {
-            console.log('Item deleted successfully!');
+            console.log('Post deleted successfully.');
+            alert('Post deleted successfully.')
           })
           .catch((error) => {
-            console.error('Error deleting item:', error);
+            console.error('Error deleting post:', error);
+            alert(error)
           });
       };
 
