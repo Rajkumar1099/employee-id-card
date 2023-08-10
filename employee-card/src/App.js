@@ -44,6 +44,7 @@
                             <>
                             <Route path='/user/details/:id' exact element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
                             <Route path='/' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
+                            <Route path='/user' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
                             <Route path='/user/edit/:id/:steps' exact  element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
                             </>}
                             <Route path='/' exact element={  <UserLogin />} />
