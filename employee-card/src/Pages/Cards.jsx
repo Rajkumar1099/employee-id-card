@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import { Card, Image, Row, Col, Badge } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs'
@@ -10,6 +10,8 @@ import dummyuser from '../assets/dummyuser.jpg';
 import {AiTwotoneDelete} from 'react-icons/ai'
 
 const Cards = ({userValue, deleteItemByKey}) => {
+    const [link, setLink] = useState(false)
+
 
     // console.log('value', Object.values(userValue).includes(whats_app))
 
@@ -18,7 +20,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
         <Card style={{width:"250px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
         <Row>
             <Col xs={12} md={10} lg={10}>
-                <Badge bg={userValue.isActive== 1 ? 'success':'danger' } >Active</Badge>
+                
             </Col>
             <Col xs={12} md={2} lg={2} > <AiTwotoneDelete style={{color:'#fbaa19'}} onClick={()=>deleteItemByKey(userValue.id)} /></Col>
         </Row>
@@ -28,7 +30,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
             </Col>
         </Row>
         <Row style={{textAlign:'center'}}>
-            <Card.Text ><div className='h5'>{userValue?.username}</div><div className='h6'>{userValue?.role}</div></Card.Text>
+            <Card.Text ><div className='h5'>{userValue?.firstname}</div><div className='h6'>{userValue?.role}</div></Card.Text>
         </Row>
         <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} replace={true} >
         <Card.Body>
@@ -48,8 +50,14 @@ const Cards = ({userValue, deleteItemByKey}) => {
                 {userValue?.address ? <Card.Text ><MdOutlineLocationOn style={{color:'red'}} />{userValue?.address}</Card.Text> :''} 
                 </Col>
             </Row> */}
+           
         </Card.Body>
         </NavLink>
+        
+        <Badge bg='secondary' onClick={()=>setLink(!link)}>Generate NFC Link</Badge>
+        {
+            link? <span>{`https://64d4ef2150f9797394bc06fe--nfctestcard64sec.netlify.app/card/${userValue.id}`}</span> :''
+        }
         </Card>
     </div>
   )

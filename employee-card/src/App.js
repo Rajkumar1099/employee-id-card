@@ -1,7 +1,5 @@
     import './App.css';
-    import { useEffect } from 'react';
     import { NavLink, Route, Routes, useLocation,  Navigate } from 'react-router-dom';
-    import Admin from './Pages/admin/Admin';
     import ProtectedRoute from './Pages/ProtectedRoute/ProtectedRoute';
     import ViewCards from './Pages/ViewCards';
     import FormVcard from './Pages/FormVcard';
@@ -22,36 +20,38 @@
         // const targetPage = location.pathname === '/' ? <NavLink to='/' replace={true}></NavLink> : <Admin />
         return (
             <div className="App">
-                    {/* {targetPage} */}
-                    {
-                        userRole ==='admin' ? <AdminDashboard />:( userRole ==='customer' ?  <UserDashboard /> :'')
-                    }
+                {
+                    userRole ==='admin' ? <AdminDashboard />:( userRole ==='customer' ?  <UserDashboard /> :'')
+                }
                 <div className='container' >
-                        <Routes>
-                            {/*admin */}
-                            {
-                            userRole ==='admin' && 
-                            <>
-                            <Route path="/admin/card/add" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
-                            <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
-                            <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
-                            <Route path='/' element={<Navigate to='/admin/vcard'/>} />
-                            <Route path='/admin' element={<Navigate to='/admin/vcard'/>} />
-                            <Route path='/admin/edit/:id/:steps' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
-                            <Route path='/*' element={<NotFound  />} />
-                            </> }
-                            { userRole ==='customer' &&
-                            <>
-                            <Route path='/user/details/:id' exact element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
-                            <Route path='/' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
-                            <Route path='/user' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
-                            <Route path='/user/edit/:id/:steps' exact  element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
-                            </>}
-                            <Route path='/' exact element={  <UserLogin />} />
-                            <Route path='/user' exact element={<UserLogin /> } />
-                            <Route path='/admin' exact element={ <AdminLogin />} />
-                            <Route path='/*' element={<NotFound />} />
-                        </Routes>
+                    <Routes>
+                        {/* admin url*/}
+                        {
+                        userRole ==='admin' && 
+                        <>
+                        <Route path="/admin/card/add" exact element={<ProtectedRoute> <FormVcard /> </ProtectedRoute>} />
+                        <Route path="/admin/vcard" exact element={<ProtectedRoute> <ViewCards /> </ProtectedRoute>} />
+                        <Route path='vcard/:id' exact element ={<ProtectedRoute>  <Details /> </ProtectedRoute>}/>
+                        <Route path='/' element={<Navigate to='/admin/vcard'/>} />
+                        <Route path='/admin' element={<Navigate to='/admin/vcard'/>} />
+                        <Route path='/admin/edit/:id/:steps' element={<ProtectedRoute > <UserUpdate/> </ProtectedRoute>} />
+                        <Route path='/*' element={<NotFound  />} />
+                        </> }
+                        {/* customer url */}
+                        { userRole ==='customer' &&
+                        <>
+                        <Route path='/user/details/:id' exact element={<UserProtectedRoute> <Details /> </UserProtectedRoute>} />
+                        <Route path='/' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
+                        <Route path='/user' element={<Navigate to={`/user/details/${userData.userId}`}/> }/>
+                        <Route path='/user/edit/:id/:steps' exact  element={<UserProtectedRoute > <UserUpdate/> </UserProtectedRoute>} />
+                        </>}
+                        {/* Public url*/}
+                        <Route path='/' exact element={  <UserLogin />} />
+                        <Route path='/user' exact element={<UserLogin /> } />
+                        <Route path='/admin' exact element={ <AdminLogin />} />
+                        <Route path='/card/:id' exact element={ <Details />} />
+                        <Route path='/*' element={<NotFound />} />
+                    </Routes>
                     </div>
             </div>
         );

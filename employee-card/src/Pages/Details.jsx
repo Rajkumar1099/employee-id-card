@@ -55,7 +55,9 @@ function Details() {
                 <Row>
                     <Col xs={12} md={12} lg={12}>
                         <Image  src={userValue?.img_url ? userValue?.img_url : dummyuser } width={120} roundedCircle />
-                        <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(1)} />
+                        {
+                            userData !== null ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(1)} /> :''
+                        }
                     </Col>
                 </Row>
                 <div className="h2 fs-title">{userValue?.firstname} {userValue?.lastname}</div>
@@ -120,7 +122,11 @@ function Details() {
                 <Row>
                     <Col xs={12} md={10} lg={10}>
                     </Col>
-                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={()=>handleEdite(2)} /></Col>
+                    <Col xs={12} md={2} lg={2} > 
+                        {
+                            userData !== null ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(2)} /> :''
+                        }
+                    </Col>
                 </Row>
                 <h3 className="h4 fs-subtitle">Social Networks</h3>
                 <hr />
@@ -182,7 +188,11 @@ function Details() {
                 <Row>
                     <Col xs={12} md={10} lg={10}>
                     </Col>
-                    <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={()=>handleEdite(3)} /></Col>
+                    <Col xs={12} md={2} lg={2} > 
+                        {
+                            userData !== null ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(3)} /> :''
+                        }
+                    </Col>
                 </Row>
                 <h3 className="h4 fs-subtitle">Personal Details</h3>
                 <hr />
