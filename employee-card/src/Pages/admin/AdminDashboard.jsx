@@ -31,11 +31,6 @@ const AdminDashboard = () => {
                     </NavLink>
                 </Nav>
                 <Nav>
-                    <NavLink to='/user' replace={true}>
-                        {/*user  Vcard */}
-                    </NavLink>
-                </Nav>
-                <Nav>
                     <NavLink to='/admin' replace={true}>
                         {/*user  Vcard */}
                     </NavLink>

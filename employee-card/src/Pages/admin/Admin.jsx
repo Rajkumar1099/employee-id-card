@@ -1,9 +1,11 @@
 import React from 'react';
 import AdminDashboard from './AdminDashboard';
 import AdminLogin from './AdminLogin';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import UserDashboard from '../Users/UserDashboard';
 
 function Admin() {
+    
     let userData = sessionStorage.getItem('userData');
     userData = JSON.parse(userData);
     const userRole = userData !== null ? userData.userRole : null;
@@ -16,9 +18,8 @@ function Admin() {
         )
     } else {
         return (
-            <AdminDashboard />
+            userRole ==='admin' ? <Navigate to='/admin/vcard' />: <Navigate to={`/user/details/${userData.userId}`} />
         )
     }
 }
-
 export default Admin;

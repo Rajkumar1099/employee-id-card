@@ -174,7 +174,7 @@ const AdminLogin = () => {
                             <Row>
                                 <Col xs={6} sm={12} md={6} lg={6}>
                                 {
-                                    <div replace={true} className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>{navigate('/user')}}>User login</div>
+                                    <div className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>{navigate('/user')}}>User login</div>
                                 }
                                 </Col >
                                 <Col xs={6} sm={12} md={6} lg={6}>
