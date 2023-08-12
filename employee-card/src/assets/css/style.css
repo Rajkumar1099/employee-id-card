@@ -7,41 +7,34 @@
     padding: 0;
 }
 html {
-    height: 100%;
-    background: -webkit-linear-gradient(to left, #9f9c9c, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+    height: 100%; /* Chrome 10-25, Safari 5.1-6 */
 }
 body {
     font-family: Aleo-Bold;
-    background: transparent;
+    background: white;
 }
-
 /*form styles*/
 #msform {
     text-align: center;
     position: relative;
     margin-top: 30px;
+    overflow: hidden;
+
 }
-
-
 #msform fieldset {
     background: white;
     border: 0 none;
     border-radius: 20px;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
     padding: 20px 30px;
-    box-sizing: border-box;
-    width: 80%;
     margin: 0 10%;
-
     /*stacking fieldsets above each other*/
     position: relative;
 }
-
 /*Hide all except first fieldset*/
 #msform fieldset:not(:first-of-type) {
     display: none;
 }
-
 /*inputs*/
 #msform input, #msform textarea {
     padding: 15px;
@@ -54,7 +47,6 @@ body {
     color: #2C3E50;
     font-size: 14px;
 }
-
 #msform input:focus, #msform textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
@@ -66,7 +58,6 @@ body {
     -moz-transition: All 0.5s ease-in;
     -o-transition: All 0.5s ease-in;
 }
-
 /*buttons*/
 #msform .action-button {
     width: 100px;

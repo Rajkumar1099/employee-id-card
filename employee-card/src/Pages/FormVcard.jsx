@@ -48,6 +48,7 @@ const FormVcard = () => {
             insta:'',
             facebook:'',
             role:'',
+            threads:'',
             company_name:'',
             isActive:'1',
             created_at: new Date().toJSON()
@@ -160,7 +161,7 @@ const FormVcard = () => {
                          aria-label="Small"
                          placeholder='Enter Password'
                          aria-describedby="inputGroup-sizing-sm"
-                         onKeyPress={ handleKeyPress}
+                         onKeyDown={ handleKeyPress}
                          onChange={handleChange} 
             />
             <button type="submit" className="submit action-button" onClick={handleCreateData}>

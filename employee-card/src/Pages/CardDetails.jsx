@@ -35,11 +35,7 @@ const CardDetails = () => {
   return (
     <div>
     <Card style={{width:"300px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
-    {/* <Row>
-        <Col xs={12} md={10} lg={10}>
-        </Col>
-        <Col xs={12} md={2} lg={2} > <AiTwotoneEdit onClick={handleEdite} /></Col>
-    </Row> */}
+   
         <Row>
             <Col>
                 <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'100px', height:'100px'}} roundedCircle/>

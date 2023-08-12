@@ -1,6 +1,6 @@
-import React ,{useState}from 'react'
+import React ,{useEffect, useState}from 'react'
 import { Card, Image, Row, Col, Badge } from 'react-bootstrap'
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs'
 import {BiLogoWhatsapp} from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
@@ -13,34 +13,43 @@ import { AiFillLinkedin } from 'react-icons/ai';
 import {BiLogoTwitter} from 'react-icons/bi';
 import { AiFillFacebook } from 'react-icons/ai'
 import { FaInstagramSquare } from 'react-icons/fa'
-import Threads from '../assets/threads.svg'
-const Cards = ({userValue, deleteItemByKey}) => {
+import { getDatabase, ref, onValue, off } from 'firebase/database';
+const  CustomerVCard = () => {
     const [link, setLink] = useState(false)
-    const [isCopied, setIsCopied] = useState(false);
-
-    const copyText = (id) => {
-        let text=`http://nfctest.lookatmeprint.com/card/${id}`
-        navigator.clipboard.writeText(text);
-        setIsCopied(true);
-        // Reset the "Copied" state after a short delay
-        setTimeout(() => {
-          setIsCopied(false);
-        }, 1500);
-      };
+    const {id} =useParams()
+    const [userValue, setUserValue] =useState()
 
       const linearGradient = 'linear-gradient(to bottom right, red, pink, yellow)';
       const iconStyle = {
         backgroundImage: linearGradient,
       };
+console.log('id', id)
+      useEffect(()=>{
+        const db=getDatabase()
+        const fetchPosts = async () => {
+            const postsRef = ref(db, 'posts/' + id);
+            const onDataUpdate = (snapshot) => {
+              const postData = snapshot.val() !== null ? snapshot.val() : [];
+              setUserValue(postData);
+            };
+            onValue(postsRef, onDataUpdate);
+            // Clean up the listener when the component unmounts
+            return () => {
+              off(postsRef, onDataUpdate);
+            };
+          };
+          fetchPosts();
+      },[])
     
     // console.log('value', Object.values(userValue).includes(whats_app))
     return (
-        <Col xs={6} sm={6} md={4} lg={3} >
-                    <Card style={{ textDecoration:'none' }}>
-                <div style={{width:'100%', height:'100px', backgroundColor:'#f5b21f' , borderRadius:'5px'}}>
+        <div>
+            <Card style={{width:"250px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
+                <div style={{width:'100%', height:'100px', backgroundColor:'#f5b21f' }}>
                     <Row>
                         <Col style={{textAlign: 'right', marginTop: '5px', marginRight: '5px'}}> 
-                            <div className='btn' style={{padding: '2px 10px', fontFamily: 'Aleo Bold', fontSize: '9px', backgroundColor: '#796EB2', borderRadius: '8px', textTransform: 'uppercase', color:'#fff' }} onClick={()=>deleteItemByKey(userValue.id)}>Remove</div>
+                            {/* <div className='btn' style={{padding: '2px 10px', fontFamily: 'Aleo Bold', fontSize: '9px', backgroundColor: '#796EB2', borderRadius: '8px', textTransform: 'uppercase', color: '#fff' }} onClick={()=>deleteItemByKey(userValue.id)}  >Remove</div> */}
+                            {/* <AiTwotoneDelete style={{color:'#1e1545'}} onClick={()=>deleteItemByKey(userValue.id)} /> */}
                         </Col>
                     </Row>
                 </div>
@@ -53,8 +62,8 @@ const Cards = ({userValue, deleteItemByKey}) => {
                     <Card.Text ><div className='h5'>{userValue?.firstname}</div><div className='h6'>{userValue?.role}</div></Card.Text>
                 </Row>
                 <hr style={{borderTop: '1px solid #f5b21f'}} />
-                <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} replace={true} >
-                    <Card.Body style={{minHeight: '140px', maxHeight: '140px', overflowY: 'auto', scrollbarWidth: 'thin' }}>
+                <NavLink to={`/vcard/${id}`} style={{ textDecoration: 'none' }} replace={true} >
+                    <Card.Body>
                         <Row>
                             <Col xs={12} style={{textAlign:'left' , color:'#1E1545' , fontWeight:'normal', fontFamily:'Aleo Bold'}} >
                                 {userValue?.contact  ?
@@ -92,35 +101,25 @@ const Cards = ({userValue, deleteItemByKey}) => {
                     </Card.Body>
                 </NavLink>
                 <hr style={{borderTop: '1px solid #f5b21f', paddingTop: '4px'}} />
-                <Row style={{padding:'0 10px', textAlign: 'center'}}>
-                    <Col xs={3} sm={3} md={3} lg={3} >
-                       {userValue?.linkedIn  ===''? <AiFillLinkedin style={{color:'#1e1545'}} />:<AiFillLinkedin style={{color:'#0A66C2'}} />}
+                <Row>
+                    <Col>
+                        <AiFillLinkedin style={{color:'#0A66C2'}} />
                     </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} >
-                    {userValue?.twitter ===''? <BiLogoTwitter style={{color:'#1e1545'}} />:<BiLogoTwitter style={{color:'#0A66C2'}} />}
+                    <Col>
+                        <BiLogoTwitter style={{color:'#0A66C2'}} />
                     </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} >
-                    {userValue?.facebook ===''? <AiFillFacebook style={{color:'#1e1545'}} />: <AiFillFacebook style={{color:'#0A66C2'}} />}
+                    <Col>
+                        <AiFillFacebook style={{color:'#1877F2'}}/>
                     </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} >
-                    {userValue?.insta ===''? <FaInstagramSquare style={{color:'#1e1545'}} />:<FaInstagramSquare style={iconStyle} />}
-                    </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} >
-                    {userValue?.thread ===''? <img src={Threads} alt="" />:<img src={Threads} alt="" width={15}/>}
+                    <Col>
+                        <FaInstagramSquare style={iconStyle}/>
                     </Col>
                 </Row>
-                <hr style={{borderTop: '0.5px solid #f5b21f', paddingTop: '4px'}} />
-                <Row style={{padding:'0 10px 10px 10px', margin: '0 10px'}}>
-                    <div onClick={()=>{copyText(userValue.id)}} disabled={isCopied}  className='btn'
-                        style={{  padding: '2px', backgroundColor: '#796EB2', color: '#fff'}}
-                    >
-                        {isCopied ? 'Copied!' : 'Generate NFC Link'}
-                    </div>
-                </Row>
-            </Card> 
-        </Col>
+                
+            </Card>         
+        </div>
     )
 }
 
-export default Cards
+export default CustomerVCard
 

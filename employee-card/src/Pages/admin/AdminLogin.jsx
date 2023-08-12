@@ -2,11 +2,11 @@ import React , { useEffect, useRef, useState} from 'react'
 import { Row, Col,Form, InputGroup, Image } from 'react-bootstrap'
 import { signInWithEmailAndPassword, signInWithPhoneNumber, getAuth, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../../firebase'
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import banner from '../../assets/banner.jpg';
 import logo from '../../assets/brand.png';
 import { getDatabase, ref, onValue} from 'firebase/database';
-
+import '../../assets/css/loginStyle.css'
 const AdminLogin = () => {
     const navigate=useNavigate();
     const locationData = useLocation();
@@ -56,15 +56,15 @@ const AdminLogin = () => {
         onValue(postsRef, (snapshot) => {
             const postData = snapshot.val();
             userData['userId'] = userId;
-            userData['isActive'] = postData?.isActive === undefined ? 0 : postData.isActive;
-            userData['userRole'] = postData?.role // admin or user
-           
+userData['isActive'] = postData?.isActive === undefined ? 0 : postData.isActive;
+userData['userRole'] = postData?.role // admin or user                  
             if(postData.role === 'admin') {
                 sessionStorage.setItem("userData", JSON.stringify(userData) );
                 navigate(`/admin/vcard`)
            }
         });
     }
+    
     // const checkIsActive=(uuid, userData)=>{
     //     const db = getDatabase()
     //     const userActive = ref(db, 'posts/' + uuid);
@@ -126,7 +126,7 @@ const AdminLogin = () => {
   return (
     <div  style={{minHeight:'100vh', paddingTop:'40px'}}>
         <Row>
-            <Col style={{textAlign: 'center'}} xs={12} sm={6} md={6} lg={6}>
+            <Col className='logo' style={{textAlign: 'center'}} xs={12} sm={6} md={6} lg={6}>
                 <Image src={banner} style={{borderRadius:'5px'}} fluid />
             </Col>
             <Col xs={12} sm={6} md={6} lg={6} style={{margin:"0px"}} >
@@ -169,30 +169,40 @@ const AdminLogin = () => {
                         </div>
                         <div className='mt-4'>
                             <Form.Group>
-                                <Form.Control className='form-control form-control-lg' type="password" name='password' onKeyPress={handleKeyPress} placeholder='Password' onChange={handleChange} />
+                                <Form.Control className='form-control form-control-lg' type="password" name='password' onKeyDown={handleKeyPress} placeholder='Password' onChange={handleChange} />
                             </Form.Group>
                             <Row>
                                 <Col xs={6} sm={12} md={6} lg={6}>
-                                {
-                                    <div className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>{navigate('/user')}}>User login</div>
-                                }
+                                
                                 </Col >
-                                <Col xs={6} sm={12} md={6} lg={6}>
-                                <div className='text' style={{color:'#1E1446', textDecoration:'none'}} onClick={()=>setShowForgot((t)=>!t)}>Forgot password</div>
+                                <Col xs={6} sm={12} md={6} lg={6} style={{textAlign:'right'}}>
+                                    <div className='text' style={{color:'#705DCB', textDecoration:'none'}} onClick={()=>setShowForgot((t)=>!t)}>Forgot your password ?</div>
                                 </Col>
                             </Row>
                         </div>
                         <div className="mt-4">
                             <Row>
-                                <Col xs={12} sm={6} md={6} lg={6} >
+                                <Col >
                                     <div className='btn d-block btn-lg' style={{background: "#F4B11E", color: "#ffffff", marginBottom:'10px'}} onClick={(e)=>handleLogin(e)}>Login</div>
                                 </Col>
                                 <br />
-                                <Col xs={12} sm={6} md={6} lg={6}>
+                                {/* <Col xs={12} sm={6} md={6} lg={6}>
                                     <div className='btn btn-secondary d-block btn-lg' onClick={()=>{navigate('/')}}>Back</div>
+                                </Col> */}
+                            </Row>
+                        </div>   
+                        <div className='mt-4'>
+                            <Row>
+                                <Col xs={6} sm={12} md={6} lg={6}>
+                                {
+                                    <NavLink to='/user' className='text' style={{color:'#1E1446'}}>User login</NavLink>
+                                }
+                                </Col >
+                                <Col xs={6} sm={12} md={6} lg={6}>
+                                   
                                 </Col>
                             </Row>
-                        </div>                        
+                        </div>                     
                     </Form>
                     }
                 </div>

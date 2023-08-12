@@ -11,6 +11,7 @@
     import UserLogin from './Pages/Users/UserLogin';
     import AdminDashboard from './Pages/admin/AdminDashboard';
     import UserDashboard from './Pages/Users/UserDashboard';
+import CustomerVCard from './Pages/CustomerVCard';
     function App() {
         const location=useLocation()
         let userData = sessionStorage.getItem('userData');
@@ -49,7 +50,7 @@
                         <Route path='/' exact element={  <UserLogin />} />
                         <Route path='/user' exact element={<UserLogin /> } />
                         <Route path='/admin' exact element={ <AdminLogin />} />
-                        <Route path='/card/:id' exact element={ <Details />} />
+                        <Route path='/card/:id' exact element={ <CustomerVCard />} />
                         <Route path='/*' element={<NotFound />} />
                     </Routes>
                     </div>

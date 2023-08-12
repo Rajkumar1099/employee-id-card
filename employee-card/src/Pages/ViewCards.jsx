@@ -57,22 +57,25 @@ const ViewCards = () => {
 
   return (
     <div style={{minHeight:'100vh'}}>
-        <Row className='p-4'>
-            <Col xs={12} md={10} lg={10}></Col>
-            <Col xs={12} md={10} lg={2}>
-                <div className='btn btn-secondary' onClick={handleCreateUser}>Create New User</div>
+        <Row className='pt-4'>
+            <Col xs={6} md={6} lg={6} sm={6} >
+              <div className="h3">Customer Cards</div>
+            </Col>
+            <Col xs={6} md={6} lg={6} sm={6} style={{textAlign: 'right'}} >
+              <div className='btn btn-sm' style={{background: '#F4B11E', color: '#fff'}} onClick={handleCreateUser}>New User</div>
             </Col>
         </Row>
-        <Row xs="auto">
-            {
-            data.length > 0 
-            ? data ?.map((value, i) => {
-              return (<Cards key={i} userValue={value} deleteItemByKey={deleteItemByKey}/>)
-              })
-              : <div className='container'> 
-              <div className='h3'>No Item exist</div>
-               </div>
-            }
+        <hr style={{borderTop: '1px solid #f5b21f', paddingTop: '4px'}} />
+        <Row>
+              {
+              data.length > 0 
+              ? data ?.map((value, i) => {
+                return (<Cards key={i} userValue={value} deleteItemByKey={deleteItemByKey}/>)
+                })
+                : <div className='container'> 
+                <div className='h3'>No Item exist</div>
+                </div>
+              }
         </Row>
     </div>
   )
