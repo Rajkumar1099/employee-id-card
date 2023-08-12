@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { getDatabase, ref, onValue, off } from 'firebase/database';
-import { Card, Button, Image, Row,Col, Badge } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Card, Button, Image, Row,Col, Badge, NavLink } from 'react-bootstrap';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import {BsFillTelephoneFill} from 'react-icons/bs';
 import {BiLogoWhatsapp} from 'react-icons/bi';
 import { HiOutlineMail } from 'react-icons/hi';
@@ -12,6 +12,7 @@ import { AiFillLinkedin } from 'react-icons/ai';
 import {BiLogoTwitter} from 'react-icons/bi';
 import { AiFillFacebook } from 'react-icons/ai'
 import { FaInstagramSquare } from 'react-icons/fa'
+import { BsArrowLeft } from 'react-icons/bs'
 import dummyuser from '../assets/dummyuser.jpg';
 import '../assets/css/style.css';
 import { getUserDetails } from '../Redux/User/Action';
@@ -35,6 +36,11 @@ function Details() {
             navigate(`/admin/edit/${id}/${steps}`);
         }
     }
+
+    const handelNavigateBack=()=>
+    {
+        navigate('/admin/vcard')
+    }
     useEffect(() => {
         const fetchPosts = async () => {
           const postsRef = ref(db, 'posts/' + id);
@@ -49,8 +55,21 @@ function Details() {
         };
         fetchPosts();
       }, []);
+       
   return (
     <div className="row">
+       <Row className='pt-4'>
+        <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
+    
+       <BsArrowLeft onClick={handelNavigateBack} />
+        </Col>
+        </Row>
+
+        <Row className='mt-4'>
+        <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'center' , color:'#fbaa19' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
+            NFC Card Details
+        </Col>
+       </Row>
         <div id="msform">
             <fieldset>
                 <Row>
@@ -68,7 +87,7 @@ function Details() {
                 <hr />
                 <div>
                     <Row> 
-                       <Col style={{textAlign:'left'}}>
+                       <Col style={{textAlign:'left' , lineHeight:'30px' , fontSize:'20px'}}>
                        {  userValue?.company_name ?
                                 <div><TbWorld style={{color:'#fbaa19'}}/>&nbsp;{userValue?.company_name}</div>
                                 :''
