@@ -1,18 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import { Form,Row, Col, InputGroup, Card ,Tabs,Tab} from 'react-bootstrap'
 import { database , auth} from '../../firebase';
 import {  getDatabase,ref, child, push, update , onValue,off} from "firebase/database";
 import { getStorage ,getDownloadURL,uploadBytes,ref as storageRef} from 'firebase/storage';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Row,Col } from 'react-bootstrap';
+import { BsArrowLeft } from 'react-icons/bs'
 import '../../assets/css/style.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails } from '../../Redux/User/Action';
 
 const UserUpdate = () => {
     const {id, steps} =useParams();
-    let userData = sessionStorage.getItem('userData');
-    userData = JSON.parse(userData);
-    const userRole = userData !== null ? userData.userRole : null
     const [firstname, setFirstName]=useState('')
     const [lastname, setLastName] =useState('')
     const [email,setEmail] = useState('')
@@ -29,6 +25,22 @@ const UserUpdate = () => {
     const [profileUrl, setprofileUrl] = useState(null);
     const [step, setStep] = useState(1);
 
+    let userData = sessionStorage.getItem('userData');
+    userData = JSON.parse(userData);
+    const userRole = userData !== null ? userData.userRole : null;
+
+    const handelNavigateBack=()=>{
+      if(userRole ==='customer')
+      {
+        navigate(`/user/details/${userData.userId}`)
+      }
+      if(userRole ==='admin')
+      {
+        navigate('/admin/vcard')
+      }
+
+    }
+
     const nextStep = () => {
       setStep((prevStep) => prevStep + 1);
     };
@@ -36,6 +48,7 @@ const UserUpdate = () => {
     const prevStep = () => {
       setStep((prevStep) => prevStep - 1);
     };
+    
 
     async function uploadFileAndPostUrl(file) {
         try {
@@ -125,6 +138,11 @@ const UserUpdate = () => {
     },[])
   return (
     <div className="row" style={{height:'100vh', paddingTop:'40px'}}>
+      <Row className='pt-4'>
+            <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
+            <BsArrowLeft onClick={handelNavigateBack} />
+            </Col>
+        </Row>
       <div className="col-md-12 col-md-offset-3">
         <form id="msform">
           {/* progressbar */}

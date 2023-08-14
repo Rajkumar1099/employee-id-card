@@ -1,6 +1,8 @@
 import React ,{useEffect, useState}from 'react'
 import { getDatabase, ref, onValue , remove} from 'firebase/database';
 import { Row ,Col} from 'react-bootstrap';
+import {firebase ,getAuth , deleteUser} from 'firebase/auth'
+import {auth} from '../firebase'
 import Cards from './Cards';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -18,9 +20,16 @@ const ViewCards = () => {
     }
 
     const deleteItemByKey = (itemKey) => {
-        console.log('id', itemKey)
         const db = getDatabase();
         const postRef = ref(db, 'posts/' + itemKey);
+        const auth = getAuth(); // Get the auth instance
+        // auth.deleteUser(itemKey)
+        //   .then(() => {
+        //     console.log('User deleted successfully.');
+        //   })
+        //   .catch((error) => {
+        //     console.error('Error deleting user:', error);
+        //   });
         remove(postRef)
           .then(() => {
             console.log('Post deleted successfully.');
@@ -31,7 +40,6 @@ const ViewCards = () => {
             alert(error)
           });
       };
-
     useEffect(()=>{
         const db = getDatabase();
         let postsRef=null;

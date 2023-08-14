@@ -59,10 +59,9 @@ function Details() {
   return (
     <div className="row">
        <Row className='pt-4'>
-        <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
-    
-       <BsArrowLeft onClick={handelNavigateBack} />
-        </Col>
+            <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
+            <BsArrowLeft onClick={handelNavigateBack} />
+            </Col>
         </Row>
 
         <Row className='mt-4'>
@@ -87,7 +86,7 @@ function Details() {
                 <hr />
                 <div>
                     <Row> 
-                       <Col style={{textAlign:'left' , lineHeight:'30px' , fontSize:'20px'}}>
+                       <Col style={{textAlign:'left' , lineHeight:'30px' , fontSize:'22px'}}>
                        {  userValue?.company_name ?
                                 <div><TbWorld style={{color:'#fbaa19'}}/>&nbsp;{userValue?.company_name}</div>
                                 :''
@@ -112,7 +111,7 @@ function Details() {
             </fieldset>
         </div>
 {
-    userData !==null ?  <div id="msform" className="col-md-12 col-md-offset-3">
+    userData !==null && (userValue?.linkedIn !=='' || userValue?.twitter !=='' || userValue?.facebook !=='')?  <div id="msform" className="col-md-12 col-md-offset-3">
     <fieldset>
          <Row>
              <Col xs={12} md={10} lg={10}>
@@ -127,7 +126,7 @@ function Details() {
          <hr />
          <div>
              <Row>
-                 <Col xs={12} style={{textAlign:'left'}}>
+                 <Col xs={12} style={{textAlign:'left' , lineHeight:'30px' , fontSize:'22px'}}>
                      {userValue?.linkedIn  ?
                      <div > <AiFillLinkedin style={{color:'#fbaa19'}}/>&nbsp;&nbsp;LinkedIn</div>
                      :''
@@ -153,7 +152,7 @@ function Details() {
   :''
 }
 {
-    userData !==null ?  <div id="msform" className="col-md-12 col-md-offset-3">
+    userData !==null && (userValue?.address !=='') ?  <div id="msform" className="col-md-12 col-md-offset-3">
     <fieldset>
          <Row>
              <Col xs={12} md={10} lg={10}>
@@ -170,7 +169,7 @@ function Details() {
          <div>
              <Row>
                  <Card.Text ></Card.Text>
-                 <Col xs={12} style={{textAlign:'left'}}>
+                 <Col xs={12} style={{textAlign:'left' , lineHeight:'30px' , fontSize:'22px'}}>
                  {userValue?.address ? 
                  <div>
                      <MdOutlineLocationOn style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Address

@@ -24,8 +24,8 @@ const UserDashboard = () => {
                 <Navbar.Brand >
                     <Image src={logo} width={80} height={80} />
                 </Navbar.Brand>
-                {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-               
+                {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                */}
                 <Nav>
                     <NavLink to='/user' replace={true}>
                         {/*user  Vcard */}
@@ -41,6 +41,7 @@ const UserDashboard = () => {
                         {/*user  Vcard */}
                     </NavLink>
                 </Nav>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav style={{ flexDirection: "row", justifyContent: "space-between", marginRight:'50px', padding:'2px' }} >
                         {/* <NavLink > */}

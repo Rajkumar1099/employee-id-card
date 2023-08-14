@@ -6,24 +6,22 @@ import {BiLogoWhatsapp} from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
 import { TbWorld } from 'react-icons/tb';
 import dummyuser from '../assets/dummyuser.jpg';
-import {AiTwotoneDelete} from 'react-icons/ai'
 import { MdOutlineLocationOn } from 'react-icons/md';
-import { AiTwotoneEdit } from 'react-icons/ai';
+import Threads from '../assets/threads.svg'
 import { AiFillLinkedin } from 'react-icons/ai';
 import {BiLogoTwitter} from 'react-icons/bi';
 import { AiFillFacebook } from 'react-icons/ai'
 import { FaInstagramSquare } from 'react-icons/fa'
+import { BsInstagram } from 'react-icons/bs'
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 const  CustomerVCard = () => {
     const [link, setLink] = useState(false)
-    const {id} =useParams()
-    const [userValue, setUserValue] =useState()
-
+    const {id} =useParams();
+    const [userValue, setUserValue] =useState();
       const linearGradient = 'linear-gradient(to bottom right, red, pink, yellow)';
       const iconStyle = {
         backgroundImage: linearGradient,
       };
-console.log('id', id)
       useEffect(()=>{
         const db=getDatabase()
         const fetchPosts = async () => {
@@ -32,19 +30,16 @@ console.log('id', id)
               const postData = snapshot.val() !== null ? snapshot.val() : [];
               setUserValue(postData);
             };
-            onValue(postsRef, onDataUpdate);
-            // Clean up the listener when the component unmounts
+            onValue(postsRef, onDataUpdate);;
             return () => {
               off(postsRef, onDataUpdate);
             };
           };
           fetchPosts();
-      },[])
-    
-    // console.log('value', Object.values(userValue).includes(whats_app))
+      },[]);
     return (
         <div>
-            <Card style={{width:"250px", height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
+            <Card style={{ height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
                 <div style={{width:'100%', height:'100px', backgroundColor:'#f5b21f' }}>
                     <Row>
                         <Col style={{textAlign: 'right', marginTop: '5px', marginRight: '5px'}}> 
@@ -59,10 +54,10 @@ console.log('id', id)
                         </Col>
                     </Row>
                 <Row style={{textAlign:'center' }}>
-                    <Card.Text ><div className='h5'>{userValue?.firstname}</div><div className='h6'>{userValue?.role}</div></Card.Text>
+                    <div ><div className='h5'>{userValue?.firstname}</div><div className='h6'>{userValue?.role}</div></div>
                 </Row>
                 <hr style={{borderTop: '1px solid #f5b21f'}} />
-                <NavLink to={`/vcard/${id}`} style={{ textDecoration: 'none' }} replace={true} >
+                
                     <Card.Body>
                         <Row>
                             <Col xs={12} style={{textAlign:'left' , color:'#1E1545' , fontWeight:'normal', fontFamily:'Aleo Bold'}} >
@@ -99,24 +94,26 @@ console.log('id', id)
                             </Col>
                         </Row>
                     </Card.Body>
-                </NavLink>
+               
                 <hr style={{borderTop: '1px solid #f5b21f', paddingTop: '4px'}} />
-                <Row>
-                    <Col>
-                        <AiFillLinkedin style={{color:'#0A66C2'}} />
+                <Row style={{padding:'0 0 0 15px', textAlign: 'center'}}>
+                    <Col xs={2} sm={2} md={2} lg={2}  style={{textAlign: 'center'}}>
+                       {userValue?.linkedIn  ===''? <AiFillLinkedin style={{color:'#1e1545' , cursor:'pointer'}} />:<AiFillLinkedin style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col>
-                        <BiLogoTwitter style={{color:'#0A66C2'}} />
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
+                    {userValue?.twitter ===''? <BiLogoTwitter style={{color:'#1e1545' , cursor:'pointer'}} />:<BiLogoTwitter style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col>
-                        <AiFillFacebook style={{color:'#1877F2'}}/>
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
+                    {userValue?.facebook ===''? <AiFillFacebook style={{color:'#1e1545' , cursor:'pointer'}} />: <AiFillFacebook style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col>
-                        <FaInstagramSquare style={iconStyle}/>
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
+                    {userValue?.insta ===''? <BsInstagram style={{color:'#1e1545' , cursor:'pointer'}} />:<BsInstagram style={iconStyle} />}
+                    </Col>
+                    <Col xs={2} sm={2} md={2} lg={2}style={{textAlign: 'center'}}>
+                    {userValue?.thread ===''? <img src={Threads} alt="" style={{cursor:'pointer'}} />:<img src={Threads} alt="" width={15} style={{cursor:'pointer'}} />}
                     </Col>
                 </Row>
-                
-            </Card>         
+            </Card>
         </div>
     )
 }

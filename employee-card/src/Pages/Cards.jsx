@@ -11,7 +11,7 @@ import { AiTwotoneEdit } from 'react-icons/ai';
 import { AiFillLinkedin } from 'react-icons/ai';
 import {BiLogoTwitter} from 'react-icons/bi';
 import { AiFillFacebook } from 'react-icons/ai'
-import { FaInstagramSquare } from 'react-icons/fa'
+import { BsInstagram } from 'react-icons/bs'
 import Threads from '../assets/threads.svg'
 const Cards = ({userValue, deleteItemByKey}) => {
     const [link, setLink] = useState(false)
@@ -37,7 +37,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const deleteCard=(id)=>{
-    // deleteItemByKey(id)
+     deleteItemByKey(id)
     console.log('delete', id)
     handleClose()
   }
@@ -52,7 +52,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
                         </Col>
                     </Row>
                     <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                     <Modal.Title>Delete NFC Card</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{color:'#F4B11E' , fontSize:'20px'}}>Are you sure ? </Modal.Body>
@@ -73,17 +73,17 @@ const Cards = ({userValue, deleteItemByKey}) => {
                         </Col>
                     </Row>
                     <Row style={{textAlign:'center' }}>
-                        <Card.Text >
+                        <div >
                             <div className='h5'>{userValue?.firstname}</div>
-                        </Card.Text>
+                        </div>
                         </Row>
                 <hr style={{borderTop: '1px solid #f5b21f'}} />
                 <NavLink to={`/vcard/${userValue.id}`} style={{ textDecoration: 'none' }} replace={true} >
                     <Card.Body style={{minHeight: '160px', maxHeight: '160px', overflowY: 'auto', scrollbarWidth: 'thin' }}>
                         <Row style={{textAlign:'center' }}>
-                        <Card.Text >
+                        <div >
                             <div style={{color:'#1E1545' , fontWeight:'normal', fontSize:'25px',fontFamily:'Aleo Bold', lineHeight:'50px'}}>{userValue?.role}</div>
-                        </Card.Text>
+                        </div>
                         </Row>
                         <Row>
                             <Col xs={12} style={{textAlign:'left' , color:'#1E1545' , fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}} >
@@ -122,20 +122,20 @@ const Cards = ({userValue, deleteItemByKey}) => {
                     </Card.Body>
                 </NavLink>
                 <hr style={{borderTop: '1px solid #f5b21f', paddingTop: '4px'}} />
-                <Row style={{padding:'0 10px', textAlign: 'center'}}>
-                    <Col xs={2} sm={2} md={2} lg={2} >
+                <Row style={{padding:'0 0 0 15px', textAlign: 'center'}}>
+                    <Col xs={2} sm={2} md={2} lg={2}  style={{textAlign: 'center'}}>
                        {userValue?.linkedIn  ===''? <AiFillLinkedin style={{color:'#1e1545' , cursor:'pointer'}} />:<AiFillLinkedin style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col xs={2} sm={2} md={2} lg={2} >
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
                     {userValue?.twitter ===''? <BiLogoTwitter style={{color:'#1e1545' , cursor:'pointer'}} />:<BiLogoTwitter style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col xs={2} sm={2} md={2} lg={2} >
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
                     {userValue?.facebook ===''? <AiFillFacebook style={{color:'#1e1545' , cursor:'pointer'}} />: <AiFillFacebook style={{color:'#0A66C2' , cursor:'pointer'}} />}
                     </Col>
-                    <Col xs={2} sm={2} md={2} lg={2} >
-                    {userValue?.insta ===''? <FaInstagramSquare style={{color:'#1e1545' , cursor:'pointer'}} />:<FaInstagramSquare style={iconStyle} />}
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
+                    {userValue?.insta ===''? <BsInstagram style={{color:'#1e1545' , cursor:'pointer'}} />:<BsInstagram style={iconStyle} />}
                     </Col>
-                    <Col xs={2} sm={2} md={2} lg={2} >
+                    <Col xs={2} sm={2} md={2} lg={2}style={{textAlign: 'center'}}>
                     {userValue?.thread ===''? <img src={Threads} alt="" style={{cursor:'pointer'}} />:<img src={Threads} alt="" width={15} style={{cursor:'pointer'}} />}
                     </Col>
                 </Row>

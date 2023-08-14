@@ -40,6 +40,8 @@ const AdminDashboard = () => {
                         {/*user  Vcard */}
                     </NavLink>
                 </Nav>
+
+                <Navbar.Toggle aria-controls="basic-navbar-nav" /> 
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav style={{ flexDirection: "row", justifyContent: "space-between", marginRight:'50px', padding:'2px' }} >
                         {/* <NavLink > */}
