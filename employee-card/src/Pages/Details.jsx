@@ -18,6 +18,7 @@ import '../assets/css/style.css';
 import { getUserDetails } from '../Redux/User/Action';
 import { useDispatch } from 'react-redux';
 import '../assets/css/details.css'
+import Threads from '../assets/threads.svg'
 
 function Details() {
     const {id} =useParams();
@@ -58,13 +59,13 @@ function Details() {
        
   return (
     <div className="row">
-       <Row className='pt-4'>
-            <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
+       <Row className='pt-1'>
+            <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'left' , color:'#1B1344' , cursor:'pointer',fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
             <BsArrowLeft onClick={handelNavigateBack} />
             </Col>
         </Row>
 
-        <Row className='mt-4'>
+        <Row className='mt-1'>
         <Col xs={6} sm={6} md={6} lg={6} style={{textAlign:'center' , color:'#fbaa19' , fontSize:'30px',fontWeight:'normal', fontFamily:'Aleo Bold' , lineHeight:'30px'}}>
             NFC Card Details
         </Col>
@@ -75,7 +76,7 @@ function Details() {
                     <Col xs={12} md={12} lg={12}>
                         <Image  src={userValue?.img_url ? userValue?.img_url : dummyuser } width={120} roundedCircle />
                         {
-                            userData !== null ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(1)} /> :''
+                            userRole ==='customer' ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(1)} /> :''
                         }
                     </Col>
                 </Row>
@@ -118,7 +119,7 @@ function Details() {
              </Col>
              <Col xs={12} md={2} lg={2} > 
                  {
-                     userData?.userRole !=='' ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(2)} /> :''
+                     userRole ==='customer' ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(2)} /> :''
                  }
              </Col>
          </Row>
@@ -128,22 +129,26 @@ function Details() {
              <Row>
                  <Col xs={12} style={{textAlign:'left' , lineHeight:'30px' , fontSize:'22px'}}>
                      {userValue?.linkedIn  ?
-                     <div > <AiFillLinkedin style={{color:'#fbaa19'}}/>&nbsp;&nbsp;LinkedIn</div>
+                     <div > <AiFillLinkedin style={{color:'#fbaa19' ,cursor:'pointer'}}/>&nbsp;&nbsp;LinkedIn</div>
                      :''
                      }
                      {
                      userValue?.twitter  ?
-                            <div><BiLogoTwitter style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Twitter</div> 
+                            <div><BiLogoTwitter style={{color:'#fbaa19' ,cursor:'pointer'}}/>&nbsp;&nbsp;Twitter</div> 
                      :''
                       }
                      {userValue?.insta ?
-                     <div><FaInstagramSquare style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Instagram</div>
+                     <div><FaInstagramSquare style={{color:'#fbaa19' ,cursor:'pointer'}}/>&nbsp;&nbsp;Instagram</div>
                          :''
                      } 
                      { userValue?.facebook ? 
-                     <div><AiFillFacebook style={{color:'#fbaa19'}}/>&nbsp;&nbsp;Facebook</div>
+                     <div><AiFillFacebook style={{color:'#fbaa19' ,cursor:'pointer'}}/>&nbsp;&nbsp;Facebook</div>
                          :''
                      }
+                    { userValue?.threads ?
+                    <div><img src={Threads} style={{color:'#fbaa19' ,cursor:'pointer' ,width:'20px', backgroundColor:'#fbaa19'}}/>&nbsp;&nbsp;Threads</div>
+                        :''
+                    }
                  </Col>
              </Row>
          </div>
@@ -159,7 +164,7 @@ function Details() {
              </Col>
              <Col xs={12} md={2} lg={2} > 
                  {
-                     userData !== null ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(3)} /> :''
+                     userRole ==='customer' ? <AiTwotoneEdit className='edit-btn' onClick={()=>handleEdite(3)} /> :''
                  }
              </Col>
          </Row>

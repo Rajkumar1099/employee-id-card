@@ -94,6 +94,7 @@ const UserLogin = () => {
             getUserData(user.uid);
         } catch (error) {
             console.error('Error signing in:', error);
+            alert(`Error signing in: ${error}`)
         }
     };
 
@@ -156,7 +157,6 @@ const UserLogin = () => {
                                 <Col xs={12} sm={6} md={6} lg={6} >
                                     <div className='btn d-block btn-lg' style={{background: "#F4B11E", color: "#ffffff", marginBottom:'10px'}} onClick={handleForgotPassword}>Send Reset Password</div>
                                 </Col>
-                                <br />
                                 <Col xs={12} sm={6} md={6} lg={6}>
                                     <div className='btn btn-secondary d-block btn-lg' onClick={()=>setShowForgot((t)=>!t)}>Back</div>
                                 </Col>
@@ -175,7 +175,6 @@ const UserLogin = () => {
                             </Form.Group>
                             <Row>
                                 <Col xs={4} sm={4} md={4} lg={6}>
-                                
                                 </Col >
                                 <Col xs={8} sm={8} md={8} lg={6} style={{textAlign:'right'}}>
                                     <div className='text' style={{color:'#705DCB', textDecoration:'none'}} onClick={()=>setShowForgot((t)=>!t)}>Forgot your password ?</div>
@@ -187,10 +186,12 @@ const UserLogin = () => {
                                 <Col xs={12} sm={12} md={12} lg={12} >
                                     <div className='btn d-block btn-lg' style={{background: "#F4B11E", color: "#ffffff", marginBottom:'10px'}} onClick={(e)=>handleLogin(e)}>Login</div>
                                 </Col>
-                                {/* <br />
+                                {
+                                /* <br />
                                 <Col xs={12} sm={6} md={6} lg={6}>
                                     <div className='btn btn-secondary d-block btn-lg' onClick={()=>{navigate('/')}}>Back</div>
-                                </Col> */}
+                                </Col> */
+                                }
                             </Row>
                         </div>  
                         <div className='mt-4'>

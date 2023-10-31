@@ -1,9 +1,9 @@
 import React ,{useEffect, useState}from 'react'
 import { Card, Image, Row, Col, Badge } from 'react-bootstrap'
 import { NavLink, useParams } from 'react-router-dom';
-import {BsFillTelephoneFill} from 'react-icons/bs'
+import {FaSquarePhone} from 'react-icons/fa6'
 import {BiLogoWhatsapp} from 'react-icons/bi'
-import { HiOutlineMail } from 'react-icons/hi'
+import { ImMail} from 'react-icons/im'
 import { TbWorld } from 'react-icons/tb';
 import dummyuser from '../assets/dummyuser.jpg';
 import { MdOutlineLocationOn } from 'react-icons/md';
@@ -11,9 +11,13 @@ import Threads from '../assets/threads.svg'
 import { AiFillLinkedin } from 'react-icons/ai';
 import {BiLogoTwitter} from 'react-icons/bi';
 import { AiFillFacebook } from 'react-icons/ai'
-import { FaInstagramSquare } from 'react-icons/fa'
+import {BiLogoPinterest} from 'react-icons/bi'
+import { BsYoutube } from "react-icons/bs"
 import { BsInstagram } from 'react-icons/bs'
+import { FaWhatsappSquare } from 'react-icons/fa'
 import { getDatabase, ref, onValue, off } from 'firebase/database';
+import 'font-awesome/css/font-awesome.min.css';
+import logo from "../assets/brand.png"
 const  CustomerVCard = () => {
     const [link, setLink] = useState(false)
     const {id} =useParams();
@@ -28,6 +32,7 @@ const  CustomerVCard = () => {
             const postsRef = ref(db, 'posts/' + id);
             const onDataUpdate = (snapshot) => {
               const postData = snapshot.val() !== null ? snapshot.val() : [];
+              console.log("post",postData)
               setUserValue(postData);
             };
             onValue(postsRef, onDataUpdate);;
@@ -38,79 +43,94 @@ const  CustomerVCard = () => {
           fetchPosts();
       },[]);
     return (
-        <div>
+        <div style={{height:'100%'}}>
             <Card style={{ height:"auto" ,marginTop:"2rem" , padding:'1rem', backgroundColor:'greay', textDecoration:'none' }}>
-                <div style={{width:'100%', height:'100px', backgroundColor:'#f5b21f' }}>
+                <div style={{textAlign:'center',width:'100%', height:'130px',  backgroundColor:'#f5b21f' , clipPath: "polygon(100% 1%, 65% 50%, 100% 15%, 100% 74%, 52% 49%, 0 74%, 0 33%, 36% 49%, 1% 23%, 0 1%)"}}>
                     <Row>
-                        <Col style={{textAlign: 'right', marginTop: '5px', marginRight: '5px'}}> 
-                            {/* <div className='btn' style={{padding: '2px 10px', fontFamily: 'Aleo Bold', fontSize: '9px', backgroundColor: '#796EB2', borderRadius: '8px', textTransform: 'uppercase', color: '#fff' }} onClick={()=>deleteItemByKey(userValue.id)}  >Remove</div> */}
-                            {/* <AiTwotoneDelete style={{color:'#1e1545'}} onClick={()=>deleteItemByKey(userValue.id)} /> */}
+                        <Col > 
+                            <div style={{color:'#000000',fontFamily: 'Aleo Bold', fontSize:'20px'}}>
+                                <Image width={50} src={logo} style={{borderRadius:'5px', textAlign: 'center'}} fluid />
+                            </div>
                         </Col>
                     </Row>
                 </div>
-                <Row style={{textAlign:'center', marginTop:'-70px' }}>
-                        <Col>
-                            <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'100px', height:'100px'}} roundedCircle/>
-                        </Col>
-                    </Row>
-                <Row style={{textAlign:'center' }}>
-                    <div ><div className='h5'>{userValue?.firstname}</div><div className='h6'>{userValue?.role}</div></div>
+                <Row style={{ marginTop:'-65px'}}>
+                    <Col>
+                       <div style={{textAlign:'center', backgroundColor:'#796EB2'}}>
+                            <Image variant="top" src={`${userValue?.img_url ? userValue?.img_url : dummyuser}`} style={{width:'80px', height:'80px', backgroundColor:'#f5b21f', backgroundColor:'inherit'}} roundedCircle/>
+                       </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <div style={{textAlign:'center', marginLeft:'10px', color:'#796EB2' }} className='h5'>{userValue?.firstname} {userValue?.lastname}</div>
+                        <div style={{textAlign:'center', marginLeft:'10px', fontSize:'12px', color:'#796EB2' }}>{userValue?.role} at  {userValue?.company_name} </div>
+                    </Col>
                 </Row>
                 <hr style={{borderTop: '1px solid #f5b21f'}} />
-                
                     <Card.Body>
+                        <Row style={{textAlign:'center' }}>
+                            {/* <div >
+                                <div style={{color:'#1E1545' , fontWeight:'normal', fontSize:'25px',fontFamily:'Aleo Bold', lineHeight:'50px'}}>{userValue?.role}</div>
+                            </div> */}
+                        </Row>
                         <Row>
                             <Col xs={12} style={{textAlign:'left' , color:'#1E1545' , fontWeight:'normal', fontFamily:'Aleo Bold'}} >
                                 {userValue?.contact  ?
                                     <Row>
-                                        <Col xs={1} ><BsFillTelephoneFill style={{color:'#f5b21f'}}/></Col> 
+                                        <Col xs={2} ><FaSquarePhone style={{color:'#f5b21f', fontSize:'20px'}}/></Col> 
                                         <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.contact}</Card.Text> </Col> 
                                     </Row>
                                 :'' }
-                                {userValue?.whats_app  ? 
+                                {userValue?.whatsapp  ? 
                                     <Row>
-                                        <Col xs={1} ><BiLogoWhatsapp style={{color:'#f5b21f'}}/> </Col> 
-                                        <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.whats_app}</Card.Text> </Col> 
+                                        <Col xs={2} ><FaWhatsappSquare style={{color:'#f5b21f', fontSize:'20px'}}/> </Col> 
+                                        <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.whatsapp}</Card.Text> </Col> 
                                     </Row>
                                 :''}
-                                {userValue?.company_name ?
-                                    <Row>
-                                        <Col xs={1} ><TbWorld style={{color:'#f5b21f'}}/> </Col> 
-                                        <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.company_name}</Card.Text> </Col> 
-                                    </Row>
-                                :''} 
                                 {userValue?.email ? 
                                     <Row>
-                                        <Col xs={1} ><HiOutlineMail style={{color:'#f5b21f'}}/> </Col> 
+                                        <Col xs={2} ><ImMail style={{color:'#f5b21f' , fontSize:'20px'}}/> </Col> 
                                         <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.email}</Card.Text> </Col> 
+                                    </Row>
+                                :''}
+                                 {userValue?.company_name ?
+                                    <Row>
+                                        <Col xs={2} ><TbWorld style={{color:'#f5b21f', fontSize:'20px'}}/> </Col> 
+                                        <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.company_name}</Card.Text> </Col> 
                                     </Row>
                                 :''}
                                 {userValue?.address ? 
                                     <Row>
-                                        <Col xs={1} ><MdOutlineLocationOn style={{color:'#f5b21f'}}/> </Col> 
+                                        <Col xs={2} ><MdOutlineLocationOn style={{color:'#f5b21f' , fontSize:'20px'}}/> </Col> 
                                         <Col xs={10}> <Card.Text style={{color: '#1e1545'}} > {userValue?.address}</Card.Text> </Col> 
                                     </Row>
                                 :''}
                             </Col>
                         </Row>
                     </Card.Body>
-               
+
                 <hr style={{borderTop: '1px solid #f5b21f', paddingTop: '4px'}} />
-                <Row style={{padding:'0 0 0 15px', textAlign: 'center'}}>
-                    <Col xs={2} sm={2} md={2} lg={2}  style={{textAlign: 'center'}}>
-                       {userValue?.linkedIn  ===''? <AiFillLinkedin style={{color:'#1e1545' , cursor:'pointer'}} />:<AiFillLinkedin style={{color:'#0A66C2' , cursor:'pointer'}} />}
+                <Row style={{textAlign: 'center'}}>
+                    { userValue?.linkedIn !=="" ?
+                     <Col xs={2} sm={2} md={2} lg={2}  style={{textAlign: 'center'}}>
+                       {userValue?.linkedIn  ===''? "":<AiFillLinkedin style={{color:'#0A66C2' , cursor:'pointer',fontSize:'25px'}} />}
+                    </Col> 
+                    :'' }
+                    <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
+                        {userValue?.twitter ===''? "":<BiLogoTwitter style={{color:'#0A66C2' , cursor:'pointer' ,fontSize:'25px'}} />}
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
-                    {userValue?.twitter ===''? <BiLogoTwitter style={{color:'#1e1545' , cursor:'pointer'}} />:<BiLogoTwitter style={{color:'#0A66C2' , cursor:'pointer'}} />}
+                        {userValue?.facebook ===''? "": <AiFillFacebook style={{color:'#0A66C2' , cursor:'pointer' ,fontSize:'25px'}} />}
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
-                    {userValue?.facebook ===''? <AiFillFacebook style={{color:'#1e1545' , cursor:'pointer'}} />: <AiFillFacebook style={{color:'#0A66C2' , cursor:'pointer'}} />}
+                        {userValue?.insta ===''? "":<BsInstagram style={iconStyle} />}
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2} style={{textAlign: 'center'}}>
-                    {userValue?.insta ===''? <BsInstagram style={{color:'#1e1545' , cursor:'pointer'}} />:<BsInstagram style={iconStyle} />}
+                    {userValue?.youtube ===''? "":<BsYoutube style={{color:'#B7081B' , cursor:'pointer' ,fontSize:'25px' ,fontSize:'25px'}} />}
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2}style={{textAlign: 'center'}}>
-                    {userValue?.thread ===''? <img src={Threads} alt="" style={{cursor:'pointer'}} />:<img src={Threads} alt="" width={15} style={{cursor:'pointer'}} />}
+                    {userValue?.pinterest ===''? "":<BiLogoPinterest style={{color:'#B7081B' , cursor:'pointer' ,fontSize:'25px'}} />}
                     </Col>
                 </Row>
             </Card>

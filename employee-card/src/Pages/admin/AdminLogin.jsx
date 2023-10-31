@@ -56,11 +56,13 @@ const AdminLogin = () => {
         onValue(postsRef, (snapshot) => {
             const postData = snapshot.val();
             userData['userId'] = userId;
-userData['isActive'] = postData?.isActive === undefined ? 0 : postData.isActive;
-userData['userRole'] = postData?.role // admin or user                  
+            userData['isActive'] = postData?.isActive === undefined ? 0 : postData.isActive;
+            userData['userRole'] = postData?.role // admin or user                  
             if(postData.role === 'admin') {
                 sessionStorage.setItem("userData", JSON.stringify(userData) );
                 navigate(`/admin/vcard`)
+           } else{
+            alert( "Invalid Login" );
            }
         });
     }
@@ -92,6 +94,7 @@ userData['userRole'] = postData?.role // admin or user
             getUserData(user.uid);
         } catch (error) {
             console.error('Error signing in:', error);
+            alert(`Invalied credentials`)
         }
     };
 
@@ -173,7 +176,6 @@ userData['userRole'] = postData?.role // admin or user
                             </Form.Group>
                             <Row>
                                 <Col xs={6} sm={12} md={6} lg={6}>
-                                
                                 </Col >
                                 <Col xs={6} sm={12} md={6} lg={6} style={{textAlign:'right'}}>
                                     <div className='text' style={{color:'#705DCB', textDecoration:'none'}} onClick={()=>setShowForgot((t)=>!t)}>Forgot your password ?</div>
@@ -199,7 +201,6 @@ userData['userRole'] = postData?.role // admin or user
                                 }
                                 </Col >
                                 <Col xs={6} sm={12} md={6} lg={6}>
-                                   
                                 </Col>
                             </Row>
                         </div>                     

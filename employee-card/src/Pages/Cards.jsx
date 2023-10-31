@@ -18,7 +18,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
     const [isCopied, setIsCopied] = useState(false);
 
     const copyText = (id) => {
-        let text=`http://nfctest.lookatmeprint.com/card/${id}`
+        let text=`https://nfctest.lookatmeprint.com/card/${id}`
         navigator.clipboard.writeText(text);
         setIsCopied(true);
         // Reset the "Copied" state after a short delay
@@ -136,7 +136,7 @@ const Cards = ({userValue, deleteItemByKey}) => {
                     {userValue?.insta ===''? <BsInstagram style={{color:'#1e1545' , cursor:'pointer'}} />:<BsInstagram style={iconStyle} />}
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2}style={{textAlign: 'center'}}>
-                    {userValue?.thread ===''? <img src={Threads} alt="" style={{cursor:'pointer'}} />:<img src={Threads} alt="" width={15} style={{cursor:'pointer'}} />}
+                    {userValue?.threads ===''? <img src={Threads} alt="" style={{cursor:'pointer'}} />:<img src={Threads} alt="" width={15} style={{cursor:'pointer'}} />}
                     </Col>
                 </Row>
                 <hr style={{borderTop: '0.5px solid #f5b21f', paddingTop: '4px'}} />

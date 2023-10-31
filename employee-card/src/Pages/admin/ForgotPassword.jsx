@@ -20,6 +20,7 @@ const ForgotPassword = () => {
       console.error('Error sending password reset email:', error);
     });
   };
+  
   return (
     <div>
       <h2>Password Reset</h2>
